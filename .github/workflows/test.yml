@@ -1,0 +1,62 @@
+---
+
+name: test
+
+"on":
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - README*
+      - LICENSE
+  pull_request:
+    paths-ignore:
+      - README*
+      - LICENSE
+
+env:
+  goversion: '1.23'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        go:
+          - '1.23'
+          - '1.x'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: ${{ matrix.go }}
+      - run: go vet .
+      - run: go build
+      - run: go install
+      - run: go test -cover ./...
+
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: ${{ env.goversion }}
+      - name: Check code format
+        run: |
+          go mod download
+          count="$(go fmt ./... | wc -l)"
+          if [[ "$count" -ne 0 ]]; then
+            echo "[ERR] 'go fmt ./...' してください" >&2
+            exit 1
+          fi
+
+  coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: ${{ env.goversion }}
+      - run: go test -coverprofile=coverage.out ./...
+      - uses: codecov/codecov-action@v5
