@@ -38,7 +38,7 @@ func Main(args *CmdArgs) exitcode {
 		logger := logger.With("path", path)
 
 		if err := remover.Remove(path); err != nil {
-			logger.With("err", err).Error("failed to remove a file")
+			logger.Error("failed to remove a file", "err", err)
 			return exitcodeErrorFailedToRemoveFile
 		}
 	}
