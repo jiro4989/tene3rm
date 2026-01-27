@@ -11,17 +11,17 @@ type CmdArgs struct {
 }
 
 func ParseArgs() (*CmdArgs, error) {
-	opts := CmdArgs{}
+	c := CmdArgs{}
 
 	flag.Usage = flagHelpMessage
 	flag.Parse()
-	opts.Args = flag.Args()
+	c.Args = flag.Args()
 
-	if err := opts.Validate(); err != nil {
+	if err := c.Validate(); err != nil {
 		return nil, err
 	}
 
-	return &opts, nil
+	return &c, nil
 }
 
 func flagHelpMessage() {
