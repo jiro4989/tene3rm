@@ -15,6 +15,8 @@ const (
 func main() {
 	args, err := ParseArgs()
 	if err != nil {
+		msg := fmt.Sprintf("parse args error: %v", err)
+		fmt.Fprintln(os.Stderr, msg)
 		os.Exit(int(exitcodeErrorParseArgs))
 	}
 
@@ -22,6 +24,7 @@ func main() {
 }
 
 func Main(args *CmdArgs) exitcode {
-	fmt.Println(args)
+	logger := newLogger(args.LogOutput)
+	logger.Info("hello")
 	return exitcodeOK
 }
