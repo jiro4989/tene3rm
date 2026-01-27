@@ -8,6 +8,8 @@ import (
 type exitcode int
 
 const (
+	// Goがpanicしたときの終了コードは2なので、
+	// 2と衝突しないように1桁の終了コードは使わない
 	exitcodeOK             exitcode = 0
 	exitcodeErrorParseArgs exitcode = 11 + iota
 )
