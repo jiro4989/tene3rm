@@ -8,6 +8,7 @@ import (
 
 type CmdArgs struct {
 	LogOutput string
+	DryRun    bool
 	Args      []string
 }
 
@@ -16,6 +17,7 @@ func ParseArgs() (*CmdArgs, error) {
 
 	flag.Usage = flagHelpMessage
 	flag.StringVar(&c.LogOutput, "log-output", logOutputStderr, "log message output")
+	flag.BoolVar(&c.DryRun, "dry-run", false, "dry run")
 	flag.Parse()
 	c.Args = flag.Args()
 
