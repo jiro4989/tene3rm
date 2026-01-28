@@ -87,7 +87,7 @@ func checkWithTextInJapanese(path string) (bool, error) {
 	return false, nil
 }
 
-// checkWithTextInJapanese はシンプルなはい/いいえプロンプトを表示する。
+// checkWithMath は単純な算数入力を求めるプロンプトを表示する。
 func checkWithMath(path string) (bool, error) {
 	validate := func(input string) error {
 		input = strings.TrimSpace(input)
