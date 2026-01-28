@@ -12,6 +12,7 @@ type CheckFunc func(string) (bool, error)
 
 type Checks map[string]CheckFunc
 
+// Check はランダムにプロンプトを表示し、ユーザの入力に応じてファイルを削除するかどうかを返す。
 func Check(path string, seed int64) (bool, error) {
 	checks := Checks{
 		"text": checkWithText,
@@ -21,6 +22,7 @@ func Check(path string, seed int64) (bool, error) {
 	return f(path)
 }
 
+// selectFunc はchecksからランダムに1つCheckFuncを返す。
 func selectFunc(checks Checks, seed int64) CheckFunc {
 	keys := make([]string, 0)
 	for k := range checks {
@@ -34,6 +36,7 @@ func selectFunc(checks Checks, seed int64) CheckFunc {
 	return f
 }
 
+// checkWithText はシンプルなYes/Noプロンプトを表示する。
 func checkWithText(path string) (bool, error) {
 	validate := func(input string) error {
 		return nil
