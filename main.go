@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"os"
 	"time"
+
+	"github.com/jiro4989/tene3rm/prompts"
 )
 
 type exitcode int
@@ -39,7 +41,7 @@ func Main(args *CmdArgs, seed int64) exitcode {
 	for _, path := range args.Args {
 		l := logger.With("path", path)
 
-		ok, err := Prompt(path, seed)
+		ok, err := prompts.Prompt(path, seed)
 		if err != nil {
 			l.Error("failed to check", "err", err)
 			return exitcodeErrorFailedToRemoveFile
