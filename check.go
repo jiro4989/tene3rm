@@ -90,6 +90,7 @@ func checkWithTextInJapanese(path string) (bool, error) {
 // checkWithTextInJapanese はシンプルなはい/いいえプロンプトを表示する。
 func checkWithMath(path string) (bool, error) {
 	validate := func(input string) error {
+		input = strings.TrimSpace(input)
 		_, err := strconv.Atoi(input)
 		if err != nil {
 			return err
