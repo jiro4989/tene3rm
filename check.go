@@ -15,7 +15,8 @@ type Checks map[string]CheckFunc
 // Check はランダムにプロンプトを表示し、ユーザの入力に応じてファイルを削除するかどうかを返す。
 func Check(path string, seed int64) (bool, error) {
 	checks := Checks{
-		"text": checkWithText,
+		"text":    checkWithText,
+		"text_jp": checkWithTextInJapanese,
 	}
 
 	f := selectFunc(checks, seed)
@@ -54,6 +55,30 @@ func checkWithText(path string) (bool, error) {
 	result = strings.TrimSpace(result)
 	switch result {
 	case "y", "ye", "yes":
+		return true, nil
+	}
+
+	return false, nil
+}
+
+// checkWithTextInJapanese はシンプルなはい/いいえプロンプトを表示する。
+func checkWithTextInJapanese(path string) (bool, error) {
+	validate := func(input string) error {
+		return nil
+	}
+
+	p := promptui.Prompt{
+		Label:    fmt.Sprintf("%s: '%s' ファイルを削除しますか?", Appname, path),
+		Validate: validate,
+	}
+	result, err := p.Run()
+	if err != nil {
+		return false, err
+	}
+
+	result = strings.TrimSpace(result)
+	switch result {
+	case "は", "はい":
 		return true, nil
 	}
 
