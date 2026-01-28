@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"time"
 )
 
 type exitcode int
@@ -23,10 +24,11 @@ func main() {
 		os.Exit(int(exitcodeErrorParseArgs))
 	}
 
-	os.Exit(int(Main(args)))
+	seed := time.Now().Unix()
+	os.Exit(int(Main(args, seed)))
 }
 
-func Main(args *CmdArgs) exitcode {
+func Main(args *CmdArgs, seed int64) exitcode {
 	logger := newLogger(args.LogOutput)
 
 	var remover Remover = &OSRemover{}
@@ -36,6 +38,15 @@ func Main(args *CmdArgs) exitcode {
 
 	for _, path := range args.Args {
 		l := logger.With("path", path)
+
+		ok, err := Check(path, seed)
+		if err != nil {
+			l.Error("failed to check", "err", err)
+			return exitcodeErrorFailedToRemoveFile
+		}
+		if !ok {
+			continue
+		}
 
 		if err := remover.Remove(path); err != nil {
 			l.Error("failed to remove a file", "err", err)

@@ -6,6 +6,10 @@ import (
 	"os"
 )
 
+const (
+	Appname = "tene3rm"
+)
+
 type CmdArgs struct {
 	LogOutput string
 	DryRun    bool
@@ -29,7 +33,7 @@ func ParseArgs() (*CmdArgs, error) {
 }
 
 func flagHelpMessage() {
-	cmd := os.Args[0]
+	cmd := Appname
 	fmt.Fprintln(os.Stderr, fmt.Sprintf("%s carefully deletes files", cmd))
 	fmt.Fprintln(os.Stderr, "")
 	fmt.Fprintln(os.Stderr, "Usage:")
