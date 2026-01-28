@@ -9,39 +9,39 @@ import (
 	"github.com/manifoldco/promptui"
 )
 
-type CheckFunc func(string) (bool, error)
+type PromptFunc func(string) (bool, error)
 
-type Checks map[string]CheckFunc
+type Prompts map[string]PromptFunc
 
-// Check はランダムにプロンプトを表示し、ユーザの入力に応じてファイルを削除するかどうかを返す。
-func Check(path string, seed int64) (bool, error) {
-	checks := Checks{
-		"text":        checkWithText,
-		"text_jp":     checkWithTextInJapanese,
-		"text_denial": checkWithTextDenial,
-		"math":        checkWithMath,
+// Prompt はランダムにプロンプトを表示し、ユーザの入力に応じてファイルを削除するかどうかを返す。
+func Prompt(path string, seed int64) (bool, error) {
+	prompts := Prompts{
+		"text":        promptWithText,
+		"text_jp":     promptWithTextInJapanese,
+		"text_denial": promptWithTextDenial,
+		"math":        promptWithMath,
 	}
 
-	f := selectFunc(checks, seed)
+	f := selectFunc(prompts, seed)
 	return f(path)
 }
 
-// selectFunc はchecksからランダムに1つCheckFuncを返す。
-func selectFunc(checks Checks, seed int64) CheckFunc {
+// selectFunc はpromptsからランダムに1つPromptFuncを返す。
+func selectFunc(prompts Prompts, seed int64) PromptFunc {
 	keys := make([]string, 0)
-	for k := range checks {
+	for k := range prompts {
 		keys = append(keys, k)
 	}
 
 	r := rand.New(rand.NewSource(seed))
 	i := r.Intn(len(keys))
 	k := keys[i]
-	f := checks[k]
+	f := prompts[k]
 	return f
 }
 
-// checkWithText はシンプルなYes/Noプロンプトを表示する。
-func checkWithText(path string) (bool, error) {
+// promptWithText はシンプルなYes/Noプロンプトを表示する。
+func promptWithText(path string) (bool, error) {
 	validate := func(input string) error {
 		return nil
 	}
@@ -64,8 +64,8 @@ func checkWithText(path string) (bool, error) {
 	return false, nil
 }
 
-// checkWithTextDenial はNoのときだけファイルを削除するプロンプトを表示する。
-func checkWithTextDenial(path string) (bool, error) {
+// promptWithTextDenial はNoのときだけファイルを削除するプロンプトを表示する。
+func promptWithTextDenial(path string) (bool, error) {
 	validate := func(input string) error {
 		return nil
 	}
@@ -88,8 +88,8 @@ func checkWithTextDenial(path string) (bool, error) {
 	return false, nil
 }
 
-// checkWithTextInJapanese はシンプルなはい/いいえプロンプトを表示する。
-func checkWithTextInJapanese(path string) (bool, error) {
+// promptWithTextInJapanese はシンプルなはい/いいえプロンプトを表示する。
+func promptWithTextInJapanese(path string) (bool, error) {
 	validate := func(input string) error {
 		return nil
 	}
@@ -112,8 +112,8 @@ func checkWithTextInJapanese(path string) (bool, error) {
 	return false, nil
 }
 
-// checkWithMath は単純な算数入力を求めるプロンプトを表示する。
-func checkWithMath(path string) (bool, error) {
+// promptWithMath は単純な算数入力を求めるプロンプトを表示する。
+func promptWithMath(path string) (bool, error) {
 	validate := func(input string) error {
 		input = strings.TrimSpace(input)
 		_, err := strconv.Atoi(input)

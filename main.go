@@ -39,7 +39,7 @@ func Main(args *CmdArgs, seed int64) exitcode {
 	for _, path := range args.Args {
 		l := logger.With("path", path)
 
-		ok, err := Check(path, seed)
+		ok, err := Prompt(path, seed)
 		if err != nil {
 			l.Error("failed to check", "err", err)
 			return exitcodeErrorFailedToRemoveFile
