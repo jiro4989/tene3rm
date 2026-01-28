@@ -35,10 +35,10 @@ func Main(args *CmdArgs) exitcode {
 	}
 
 	for _, path := range args.Args {
-		logger := logger.With("path", path)
+		l := logger.With("path", path)
 
 		if err := remover.Remove(path); err != nil {
-			logger.Error("failed to remove a file", "err", err)
+			l.Error("failed to remove a file", "err", err)
 			return exitcodeErrorFailedToRemoveFile
 		}
 	}
