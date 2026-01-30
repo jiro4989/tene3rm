@@ -18,6 +18,7 @@ func Prompt(path string, seed int64) (bool, error) {
 		promptWithYesNoInJapanese3,
 		promptWithYesNoDenial,
 		promptWithMath,
+		promptWithTimer,
 	}
 
 	r := rand.New(rand.NewSource(seed))
