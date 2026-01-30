@@ -39,6 +39,7 @@ func promptWithTimer(_ string) (bool, error) {
 }
 
 func printTimer(t time.Time, running *bool) {
+	// 行頭に移動するエスケープシーケンス
 	const escMove = "\r"
 
 	for *running {
