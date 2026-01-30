@@ -51,3 +51,8 @@ func promptWithMath(path string) (bool, error) {
 
 	return resultNum == c, nil
 }
+
+// promptWithMath2 は筆算での計算結果を求めるプロンプトを表示する。
+func promptWithMath2(path string) (bool, error) {
+	return false, nil
+}
