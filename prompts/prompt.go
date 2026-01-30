@@ -15,8 +15,8 @@ func Prompt(path string, seed int64) (bool, error) {
 	pfs := []promptFunc{
 		promptWithYesNo,
 		promptWithYesNoInJapanese,
-		promptWithYesNoDenial,
 		promptWithYesNoInJapanese3,
+		promptWithYesNoDenial,
 		promptWithMath,
 	}
 
