@@ -7,19 +7,21 @@ import (
 	"github.com/manifoldco/promptui"
 )
 
+const face = "(*'-')!"
+
 // promptWithYesNo はシンプルなYes/Noプロンプトを表示する。
 func promptWithYesNo(path string) (bool, error) {
-	return promptWithSimpleText(path, "(*'-')! < remove file '%s'? [y/n]", []string{"y", "ye", "yes"}, "")
+	return promptWithSimpleText(path, face+" < remove file '%s'? [y/n]", []string{"y", "ye", "yes"}, "")
 }
 
 // promptWithYesNoDenial はNoのときだけファイルを削除するプロンプトを表示する。
 func promptWithYesNoDenial(path string) (bool, error) {
-	return promptWithSimpleText(path, "(*'-')! < DON't remove file '%s'? [y/n]", []string{"n", "no"}, "")
+	return promptWithSimpleText(path, face+" < DON't remove file '%s'? [y/n]", []string{"n", "no"}, "")
 }
 
 // promptWithYesNoInJapanese はシンプルなはい/いいえプロンプトを表示する。
 func promptWithYesNoInJapanese(path string) (bool, error) {
-	return promptWithSimpleText(path, "(*'-')! < '%s' ファイルを削除しますか? [はい/いいえ]", []string{"は", "はい"}, "")
+	return promptWithSimpleText(path, face+" < '%s' ファイルを削除しますか? [はい/いいえ]", []string{"は", "はい"}, "")
 }
 
 // promptWithYesNoInJapanese3 は 3 回確認するプロンプトを表示する。
