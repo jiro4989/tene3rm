@@ -6,6 +6,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/jiro4989/tene3rm/domain"
 	"github.com/manifoldco/promptui"
 )
 
@@ -20,32 +21,21 @@ func promptWithMath(path string) (bool, error) {
 		return nil
 	}
 
-	calcs := map[string]func(int, int) int{
-		"+": func(a, b int) int {
-			return a + b
-		},
-		"-": func(a, b int) int {
-			return a - b
-		},
-		"*": func(a, b int) int {
-			return a * b
-		},
+	ops := []domain.Operator{
+		&domain.PlusOperator{},
+		&domain.MinusOperator{},
+		&domain.MultiOperator{},
 	}
 
 	a := rand.Intn(9) + 1
 	b := rand.Intn(9) + 1
 
-	keys := make([]string, 0)
-	for k := range calcs {
-		keys = append(keys, k)
-	}
-	i := rand.Intn(len(keys))
-	op := keys[i]
-	f := calcs[op]
-	c := f(a, b)
+	i := rand.Intn(len(ops))
+	op := ops[i]
+	c := op.Do(a, b)
 
 	p := promptui.Prompt{
-		Label:    fmt.Sprintf("%s: remove file '%s'? (%d %s %d = ?)", appname, path, a, op, b),
+		Label:    fmt.Sprintf("%s: remove file '%s'? (%d %s %d = ?)", appname, path, a, op.Op(), b),
 		Validate: validate,
 	}
 	result, err := p.Run()
