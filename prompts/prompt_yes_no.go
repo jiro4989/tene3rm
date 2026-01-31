@@ -81,6 +81,7 @@ func promptWithSimpleText(path string, promptFmt string, want string, defaultVal
 	return found, nil
 }
 
+// prefixes は yes を y, ye, yes といった感じの配列にして返す。
 func prefixes(s string) []string {
 	// マルチバイト文字を考慮するため rune に変換
 	runes := []rune(s)
