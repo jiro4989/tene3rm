@@ -1,4 +1,4 @@
-package prompts
+package terminal
 
 // promptWithTetris はEasyModeのテトリスを表示する。
 func promptWithTetris(path string) (bool, error) {
