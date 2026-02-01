@@ -9,19 +9,19 @@ func NewTextService() TextService {
 }
 
 func (s TextService) JudgeYesNo(input string) bool {
-	i := model.NewText(input)
-	want := model.NewText("yes").Prefixes()
-	return want.Contains(i)
+	return judge(input, "yes")
 }
 
 func (s TextService) JudgeYesNoDenial(input string) bool {
-	i := model.NewText(input)
-	want := model.NewText("no").Prefixes()
-	return want.Contains(i)
+	return judge(input, "no")
 }
 
 func (s TextService) JudgeYesNoJapanese(input string) bool {
+	return judge(input, "はい")
+}
+
+func judge(input string, want string) bool {
 	i := model.NewText(input)
-	want := model.NewText("はい").Prefixes()
-	return want.Contains(i)
+	w := model.NewText(want).Prefixes()
+	return w.Contains(i)
 }
