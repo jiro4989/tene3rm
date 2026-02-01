@@ -14,8 +14,8 @@ const appname = "tene3rm"
 func Prompt(path string, seed int64) (bool, error) {
 	pfs := []promptFunc{
 		promptWithYesNo,
-		promptWithYesNoInJapanese,
-		promptWithYesNoInJapanese3,
+		promptWithYesNoJapanese,
+		promptWithYesNoJapanese3,
 		promptWithYesNoDenial,
 		promptWithMath,
 		promptWithTimer,

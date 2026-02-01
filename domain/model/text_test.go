@@ -1,4 +1,4 @@
-package terminal
+package model
 
 import (
 	"testing"
@@ -9,30 +9,30 @@ import (
 func TestPrefixes(t *testing.T) {
 	tests := []struct {
 		name string
-		s    string
-		want []string
+		s    Text
+		want Texts
 	}{
 		{
 			name: "正常系: yes から y, ye, yes が得られる",
-			s:    "yes",
-			want: []string{"y", "ye", "yes"},
+			s:    NewText("yes"),
+			want: NewTexts([]string{"y", "ye", "yes"}),
 		},
 		{
 			name: "正常系: いいえ から い, いい, いいえ が得られる",
-			s:    "いいえ",
-			want: []string{"い", "いい", "いいえ"},
+			s:    NewText("いいえ"),
+			want: NewTexts([]string{"い", "いい", "いいえ"}),
 		},
 		{
 			name: "正常系: 一文字の場合でも問題ない",
-			s:    "い",
-			want: []string{"い"},
+			s:    NewText("い"),
+			want: NewTexts([]string{"い"}),
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			a := assert.New(t)
 
-			got := prefixes(tt.s)
+			got := tt.s.Prefixes()
 			a.Equal(tt.want, got)
 		})
 	}
