@@ -11,17 +11,17 @@ func NewTextService() TextService {
 func (s TextService) JudgeYesNo(input string) bool {
 	i := model.NewText(input)
 	want := model.NewText("yes").Prefixes()
-	return want.Contain(i)
+	return want.Contains(i)
 }
 
 func (s TextService) JudgeYesNoDenial(input string) bool {
 	i := model.NewText(input)
 	want := model.NewText("no").Prefixes()
-	return want.Contain(i)
+	return want.Contains(i)
 }
 
 func (s TextService) JudgeYesNoJapanese(input string) bool {
 	i := model.NewText(input)
 	want := model.NewText("はい").Prefixes()
-	return want.Contain(i)
+	return want.Contains(i)
 }

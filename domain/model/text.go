@@ -13,10 +13,6 @@ func NewText(s string) Text {
 	}
 }
 
-func (t Text) Value() string {
-	return t.value
-}
-
 func (t Text) Equal(t2 Text) bool {
 	return t.value == t2.value
 }
@@ -44,7 +40,7 @@ func NewTexts(s []string) Texts {
 	return t
 }
 
-func (t Texts) Contain(t2 Text) bool {
+func (t Texts) Contains(t2 Text) bool {
 	for _, v := range t.value {
 		if v.Equal(t2) {
 			return true
