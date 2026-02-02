@@ -5,8 +5,10 @@ import (
 	"math/rand"
 	"strconv"
 	"strings"
+	"time"
 
-	"github.com/jiro4989/tene3rm/domain"
+	"github.com/jiro4989/tene3rm/domain/model"
+	"github.com/jiro4989/tene3rm/domain/service"
 	"github.com/manifoldco/promptui"
 )
 
@@ -21,21 +23,13 @@ func promptWithMath(path string) (bool, error) {
 		return nil
 	}
 
-	ops := []domain.Operator{
-		&domain.PlusOperator{},
-		&domain.MinusOperator{},
-		&domain.MultiOperator{},
-	}
-
-	a := rand.Intn(9) + 1
-	b := rand.Intn(9) + 1
-
-	i := rand.Intn(len(ops))
-	op := ops[i]
-	c := op.Do(a, b)
+	svc := service.NewMathService()
+	seed := time.Now().Unix()
+	r := rand.New(rand.NewSource(seed))
+	want, a, b, op := svc.SimpleOperations(r, r, r)
 
 	p := promptui.Prompt{
-		Label:    fmt.Sprintf("%s: remove file '%s'? (%d %s %d = ?)", appname, path, a, op.Op(), b),
+		Label:    fmt.Sprintf("%s: remove file '%s'? (%d %s %d = ?)", appname, path, a.Value(), op, b.Value()),
 		Validate: validate,
 	}
 	result, err := p.Run()
@@ -43,13 +37,12 @@ func promptWithMath(path string) (bool, error) {
 		return false, err
 	}
 
-	result = strings.TrimSpace(result)
-	resultNum, err := strconv.Atoi(result)
+	resultNum, err := model.NewNumberWithText(result)
 	if err != nil {
 		return false, err
 	}
 
-	return resultNum == c, nil
+	return want.Equal(resultNum), nil
 }
 
 // promptWithMath2 は筆算での計算結果を求めるプロンプトを表示する。
