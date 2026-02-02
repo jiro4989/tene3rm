@@ -12,8 +12,7 @@ func NewNumber(n int) Number {
 	}
 }
 
-func NewNumberWithText(s string) (Number, error) {
-	t := NewText(s)
+func NewNumberWithText(t Text) (Number, error) {
 	n, err := strconv.Atoi(t.value)
 	if err != nil {
 		return Number{}, err

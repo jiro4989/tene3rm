@@ -37,7 +37,7 @@ func promptWithMath(path string) (bool, error) {
 		return false, err
 	}
 
-	resultNum, err := model.NewNumberWithText(result)
+	resultNum, err := model.NewNumberWithText(model.NewText(result))
 	if err != nil {
 		return false, err
 	}
