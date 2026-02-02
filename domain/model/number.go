@@ -1,6 +1,8 @@
 package model
 
-import "strconv"
+import (
+	"strconv"
+)
 
 type Number struct {
 	value int
@@ -26,4 +28,23 @@ func (n Number) Equal(n2 Number) bool {
 
 func (n Number) Value() int {
 	return n.value
+}
+
+func (n Number) Plus(n2 Number) Number {
+	return NewNumber(n.value + n2.value)
+}
+
+func (n Number) Minus(n2 Number) Number {
+	return NewNumber(n.value - n2.value)
+}
+
+func (n Number) Multi(n2 Number) Number {
+	return NewNumber(n.value * n2.value)
+}
+
+func (n Number) Max(n2 Number) Number {
+	if n.value < n2.value {
+		return n2
+	}
+	return n
 }

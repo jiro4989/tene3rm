@@ -1,7 +1,7 @@
 package model
 
 type Operator interface {
-	Do(int, int) int
+	Do(Number, Number) Number
 	Op() string
 }
 
@@ -13,8 +13,8 @@ var (
 
 type PlusOperator struct{}
 
-func (o *PlusOperator) Do(a, b int) int {
-	return a + b
+func (o *PlusOperator) Do(a, b Number) Number {
+	return a.Plus(b)
 }
 
 func (o *PlusOperator) Op() string {
@@ -23,8 +23,8 @@ func (o *PlusOperator) Op() string {
 
 type MinusOperator struct{}
 
-func (o *MinusOperator) Do(a, b int) int {
-	return a - b
+func (o *MinusOperator) Do(a, b Number) Number {
+	return a.Minus(b)
 }
 
 func (o *MinusOperator) Op() string {
@@ -33,8 +33,8 @@ func (o *MinusOperator) Op() string {
 
 type MultiOperator struct{}
 
-func (o *MultiOperator) Do(a, b int) int {
-	return a * b
+func (o *MultiOperator) Do(a, b Number) Number {
+	return a.Multi(b)
 }
 
 func (o *MultiOperator) Op() string {
