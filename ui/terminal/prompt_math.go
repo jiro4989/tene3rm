@@ -3,8 +3,6 @@ package terminal
 import (
 	"fmt"
 	"math/rand"
-	"strconv"
-	"strings"
 	"time"
 
 	"github.com/jiro4989/tene3rm/domain/model"
@@ -15,8 +13,7 @@ import (
 // promptWithMath は単純な算数入力を求めるプロンプトを表示する。
 func promptWithMath(path string) (bool, error) {
 	validate := func(input string) error {
-		input = strings.TrimSpace(input)
-		_, err := strconv.Atoi(input)
+		_, err := model.NewNumberWithText(model.NewText(input))
 		if err != nil {
 			return err
 		}
