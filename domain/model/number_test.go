@@ -6,6 +6,14 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func TestNewNumber(t *testing.T) {
+	a := assert.New(t)
+
+	a.True(NewNumber(5).Equal(NewNumber(5)))
+	a.False(NewNumber(6).Equal(NewNumber(5)))
+	a.Equal(5, NewNumber(5).Value())
+}
+
 func TestNewNumberWithText(t *testing.T) {
 	tests := []struct {
 		name    string
