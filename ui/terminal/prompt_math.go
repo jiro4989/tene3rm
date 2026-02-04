@@ -44,35 +44,18 @@ func promptWithMath(path string) (bool, error) {
 	return want.Equal(resultNum), nil
 }
 
+var vals = [5][]string{
+	{" ", " ", " ", " "},
+	{" ", " ", " ", " "},
+	{" ", " ", " ", " "},
+	{" ", " ", " ", " "},
+	{" ", " ", " ", " "},
+}
+
 // promptWithMath2 は筆算での計算結果を求めるプロンプトを表示する。
 func promptWithMath2(path string) (bool, error) {
 	a := rand.Intn(90) + 10
 	b := rand.Intn(90) + 10
-
-	if err := termbox.Init(); err != nil {
-		return false, err
-	}
-	defer termbox.Close()
-	termbox.SetInputMode(termbox.InputEsc)
-	termbox.Flush()
-
-	drawBackground(a, b)
-
-	time.Sleep(3 * time.Second)
-
-	return false, nil
-}
-
-func drawBackground(a, b int) {
-	termbox.Clear(termbox.ColorDefault, termbox.ColorDefault)
-
-	vals := [5][]string{
-		{" ", " ", " ", " "},
-		{" ", " ", " ", " "},
-		{" ", " ", " ", " "},
-		{" ", " ", " ", " "},
-		{" ", " ", " ", " "},
-	}
 
 	var (
 		a10 int = a / 10
@@ -87,17 +70,98 @@ func drawBackground(a, b int) {
 	vals[1][2] = fmt.Sprintf("%d", b10)
 	vals[1][3] = fmt.Sprintf("%d", b1)
 
-	drawLine(strsToLine(vals[0]), 1, 1)
-	drawLine(strsToLine(vals[1]), 1, 2)
-	drawLine(horizontalLine, 1, 3)
-	drawLine(strsToLine(vals[2]), 1, 4)
-	drawLine(strsToLine(vals[3]), 1, 5)
-	drawLine(horizontalLine, 1, 6)
-	drawLine(strsToLine(vals[4]), 1, 7)
+	if err := termbox.Init(); err != nil {
+		return false, err
+	}
+	defer termbox.Close()
+	termbox.SetInputMode(termbox.InputEsc)
+	termbox.Flush()
+
+	var x int = 3
+	var y int = 2
+	for {
+		drawBackground(x, y)
+		time.Sleep(50 * time.Millisecond)
+		switch ev := termbox.PollEvent(); ev.Type {
+		case termbox.EventKey:
+			switch ev.Key {
+			case termbox.KeyCtrlC, termbox.KeyCtrlD, termbox.KeyEnter:
+				goto fin
+			}
+
+			switch ev.Ch {
+			case 'h':
+				x--
+				if x < 0 {
+					x = 0
+				}
+			case 'j':
+				y++
+				if 4 < y {
+					y = 4
+				}
+			case 'k':
+				y--
+				if y < 2 {
+					y = 2
+				}
+			case 'l':
+				x++
+				if 3 < x {
+					x = 3
+				}
+			case '0':
+				vals[y][x] = "0"
+			case '1':
+				vals[y][x] = "1"
+			case '2':
+				vals[y][x] = "2"
+			case '3':
+				vals[y][x] = "3"
+			case '4':
+				vals[y][x] = "4"
+			case '5':
+				vals[y][x] = "5"
+			case '6':
+				vals[y][x] = "6"
+			case '7':
+				vals[y][x] = "7"
+			case '8':
+				vals[y][x] = "8"
+			case '9':
+				vals[y][x] = "9"
+			}
+		}
+	}
+fin:
+
+	return false, nil
+}
+
+func drawBackground(x, y int) {
+	termbox.Clear(termbox.ColorDefault, termbox.ColorDefault)
+
+	const leftPad = 1
+	const topPad = 1
+
+	drawLine(strsToLine(vals[0]), leftPad, 1)
+	drawLine(strsToLine(vals[1]), leftPad, 2)
+	drawLine(horizontalLine, leftPad, 3)
+	drawLine(strsToLine(vals[2]), leftPad, 4)
+	drawLine(strsToLine(vals[3]), leftPad, 5)
+	drawLine(horizontalLine, leftPad, 6)
+	drawLine(strsToLine(vals[4]), leftPad, 7)
 
 	drawLine("h: move left, j: move down, k: move up, l: move right", 1, 9)
-	drawLine("ENTER: confirm", 1, 9)
+	drawLine("ENTER: confirm", 1, 10)
 
+	var y2 int
+	if 2 <= y && y < 4 {
+		y2 = y + 1 + topPad
+	} else {
+		y2 = y + 2 + topPad
+	}
+	termbox.SetCell(x*2+leftPad, y2, []rune(vals[y][x])[0], termbox.ColorWhite, termbox.ColorBlack)
 	termbox.Flush()
 }
 
