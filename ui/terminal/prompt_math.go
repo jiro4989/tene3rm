@@ -77,10 +77,9 @@ func promptWithMath2(path string) (bool, error) {
 	termbox.SetInputMode(termbox.InputEsc)
 	termbox.Flush()
 
-	var x int = 3
-	var y int = 2
+	pos := model.NewPosition(3, 2, 0, 2, 3, 4)
 	for {
-		drawBackground(x, y)
+		drawBackground(pos.X(), pos.Y())
 		time.Sleep(50 * time.Millisecond)
 		switch ev := termbox.PollEvent(); ev.Type {
 		case termbox.EventKey:
@@ -91,45 +90,33 @@ func promptWithMath2(path string) (bool, error) {
 
 			switch ev.Ch {
 			case 'h':
-				x--
-				if x < 0 {
-					x = 0
-				}
+				pos = pos.MoveLeft()
 			case 'j':
-				y++
-				if 4 < y {
-					y = 4
-				}
+				pos = pos.MoveDown()
 			case 'k':
-				y--
-				if y < 2 {
-					y = 2
-				}
+				pos = pos.MoveUp()
 			case 'l':
-				x++
-				if 3 < x {
-					x = 3
-				}
+				pos = pos.MoveRight()
 			case '0':
-				vals[y][x] = "0"
+				setNum(pos, "0")
 			case '1':
-				vals[y][x] = "1"
+				setNum(pos, "1")
 			case '2':
-				vals[y][x] = "2"
+				setNum(pos, "2")
 			case '3':
-				vals[y][x] = "3"
+				setNum(pos, "3")
 			case '4':
-				vals[y][x] = "4"
+				setNum(pos, "4")
 			case '5':
-				vals[y][x] = "5"
+				setNum(pos, "5")
 			case '6':
-				vals[y][x] = "6"
+				setNum(pos, "6")
 			case '7':
-				vals[y][x] = "7"
+				setNum(pos, "7")
 			case '8':
-				vals[y][x] = "8"
+				setNum(pos, "8")
 			case '9':
-				vals[y][x] = "9"
+				setNum(pos, "9")
 			}
 		}
 	}
@@ -153,6 +140,10 @@ fin:
 	r3 := n3.Equal(model.NewNumber(a * b))
 
 	return r1 && r2 && r3, nil
+}
+
+func setNum(pos model.Position, s string) {
+	vals[pos.Y()][pos.X()] = s
 }
 
 func drawBackground(x, y int) {
@@ -185,16 +176,6 @@ func drawBackground(x, y int) {
 const fg = termbox.ColorDefault
 const bg = termbox.ColorDefault
 
-//	  2 5
-//	x 5 5
-//
-// -------
-//
-//	1 2 5
-//
-// 1 2 5
-// -------
-// 1 3 7 5
 func drawLine(text string, x, y int) {
 	for i, c := range text {
 		termbox.SetCell(x+i, y, c, fg, bg)
