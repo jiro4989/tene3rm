@@ -135,7 +135,24 @@ func promptWithMath2(path string) (bool, error) {
 	}
 fin:
 
-	return false, nil
+	n1, err := model.NewNumberWithText(model.NewText(strings.Join(vals[2], "")))
+	if err != nil {
+		return false, err
+	}
+	n2, err := model.NewNumberWithText(model.NewText(strings.Join(vals[3], "")))
+	if err != nil {
+		return false, err
+	}
+	n3, err := model.NewNumberWithText(model.NewText(strings.Join(vals[4], "")))
+	if err != nil {
+		return false, err
+	}
+
+	r1 := n1.Equal(model.NewNumber(a * b1))
+	r2 := n2.Equal(model.NewNumber(a * b10))
+	r3 := n3.Equal(model.NewNumber(a * b))
+
+	return r1 && r2 && r3, nil
 }
 
 func drawBackground(x, y int) {
