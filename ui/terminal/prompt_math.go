@@ -61,7 +61,7 @@ func promptWithMath2(path string) (bool, error) {
 	termbox.Flush()
 
 	for {
-		drawScreen(cag)
+		drawScreen(cag, path)
 		time.Sleep(50 * time.Millisecond)
 		switch ev := termbox.PollEvent(); ev.Type {
 		case termbox.EventKey:
@@ -107,25 +107,33 @@ fin:
 	return cag.Evaluate()
 }
 
-func drawScreen(cag model.ColumnAdditionGame) {
+func drawScreen(cag model.ColumnAdditionGame, path string) {
 	termbox.Clear(termbox.ColorDefault, termbox.ColorDefault)
 
 	const leftPad = 1
 	const topPad = 1
-	var lastLineY int
+
+	cursorLineY := topPad
+	drawLine(fmt.Sprintf("%s < remove file '%s'", face, path), leftPad, topPad)
+	cursorLineY += 2
+
+	startLineY := cursorLineY
 	for y, line := range cag.ResultStringLines() {
-		drawLine(line, leftPad, y+topPad)
-		lastLineY = y
+		drawLine(line, leftPad, y+startLineY)
+		cursorLineY++
 	}
-	drawLine("h: move left, j: move down, k: move up, l: move right", leftPad, lastLineY+3)
-	drawLine("ENTER: confirm", leftPad, lastLineY+4)
+
+	cursorLineY++
+	drawLine("h: move left, j: move down, k: move up, l: move right", leftPad, cursorLineY)
+	cursorLineY++
+	drawLine("ENTER: confirm", leftPad, cursorLineY)
 
 	x, y := cag.PositionXY()
 	var y2 int
 	if 0 <= y && y < 2 {
-		y2 = y + 3 + topPad
+		y2 = y + 5 + topPad
 	} else {
-		y2 = y + 4 + topPad
+		y2 = y + 6 + topPad
 	}
 	termbox.SetCell(x*2+leftPad, y2, cag.CurrentPositionCellValueRune(), termbox.ColorWhite, termbox.ColorBlack)
 	termbox.Flush()
