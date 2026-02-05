@@ -14,28 +14,28 @@ func TestNewNumber(t *testing.T) {
 	a.Equal(5, NewNumber(5).Value())
 }
 
-func TestNewNumberWithText(t *testing.T) {
+func TestNewNumberWithUserInputText(t *testing.T) {
 	tests := []struct {
 		name    string
-		input   Text
+		input   UserInputText
 		want    Number
 		wantErr bool
 	}{
 		{
 			name:    "正常系: 5はNumberに変換できる",
-			input:   NewText("5"),
+			input:   NewUserInputText("5"),
 			want:    NewNumber(5),
 			wantErr: false,
 		},
 		{
 			name:    "正常系: 空白は無視される",
-			input:   NewText(" 5 "),
+			input:   NewUserInputText(" 5 "),
 			want:    NewNumber(5),
 			wantErr: false,
 		},
 		{
 			name:    "異常系: 数値変換出来ない場合はエラー",
-			input:   NewText("hoge"),
+			input:   NewUserInputText("hoge"),
 			want:    NewNumber(0),
 			wantErr: true,
 		},
@@ -44,7 +44,7 @@ func TestNewNumberWithText(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			a := assert.New(t)
 
-			got, err := NewNumberWithText(tt.input)
+			got, err := NewNumberWithUserInputText(tt.input)
 			if tt.wantErr {
 				a.Error(err)
 				return

@@ -6,23 +6,23 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestTextEqual(t *testing.T) {
+func TestUserInputTextEqual(t *testing.T) {
 	tests := []struct {
 		name string
-		a    Text
-		b    Text
+		a    UserInputText
+		b    UserInputText
 		want bool
 	}{
 		{
 			name: "正常系: 等しい場合は true",
-			a:    NewText("yes"),
-			b:    NewText("yes"),
+			a:    NewUserInputText("yes"),
+			b:    NewUserInputText("yes"),
 			want: true,
 		},
 		{
 			name: "正常系: 等しくない場合は false",
-			a:    NewText("yes"),
-			b:    NewText("ye"),
+			a:    NewUserInputText("yes"),
+			b:    NewUserInputText("ye"),
 			want: false,
 		},
 	}
@@ -36,26 +36,26 @@ func TestTextEqual(t *testing.T) {
 	}
 }
 
-func TestTextPrefixes(t *testing.T) {
+func TestUserInputTextPrefixes(t *testing.T) {
 	tests := []struct {
 		name string
-		s    Text
-		want Texts
+		s    UserInputText
+		want UserInputTexts
 	}{
 		{
 			name: "正常系: yes から y, ye, yes が得られる",
-			s:    NewText("yes"),
-			want: NewTexts([]string{"y", "ye", "yes"}),
+			s:    NewUserInputText("yes"),
+			want: NewUserInputTexts([]string{"y", "ye", "yes"}),
 		},
 		{
 			name: "正常系: いいえ から い, いい, いいえ が得られる",
-			s:    NewText("いいえ"),
-			want: NewTexts([]string{"い", "いい", "いいえ"}),
+			s:    NewUserInputText("いいえ"),
+			want: NewUserInputTexts([]string{"い", "いい", "いいえ"}),
 		},
 		{
 			name: "正常系: 一文字の場合でも問題ない",
-			s:    NewText("い"),
-			want: NewTexts([]string{"い"}),
+			s:    NewUserInputText("い"),
+			want: NewUserInputTexts([]string{"い"}),
 		},
 	}
 	for _, tt := range tests {
@@ -68,41 +68,41 @@ func TestTextPrefixes(t *testing.T) {
 	}
 }
 
-func TestTextContains(t *testing.T) {
+func TestUserInputTextContains(t *testing.T) {
 	tests := []struct {
 		name string
-		a    Texts
-		b    Text
+		a    UserInputTexts
+		b    UserInputText
 		want bool
 	}{
 		{
 			name: "正常系: 含まれるなら true",
-			a:    NewTexts([]string{"y", "ye", "yes"}),
-			b:    NewText("yes"),
+			a:    NewUserInputTexts([]string{"y", "ye", "yes"}),
+			b:    NewUserInputText("yes"),
 			want: true,
 		},
 		{
 			name: "正常系: 含まれるなら true",
-			a:    NewTexts([]string{"y", "ye", "yes"}),
-			b:    NewText("ye"),
+			a:    NewUserInputTexts([]string{"y", "ye", "yes"}),
+			b:    NewUserInputText("ye"),
 			want: true,
 		},
 		{
 			name: "正常系: 含まれるなら true",
-			a:    NewTexts([]string{"は", "はい"}),
-			b:    NewText("はい"),
+			a:    NewUserInputTexts([]string{"は", "はい"}),
+			b:    NewUserInputText("はい"),
 			want: true,
 		},
 		{
 			name: "正常系: 含まれないなら false",
-			a:    NewTexts([]string{"y", "ye", "yes"}),
-			b:    NewText("no"),
+			a:    NewUserInputTexts([]string{"y", "ye", "yes"}),
+			b:    NewUserInputText("no"),
 			want: false,
 		},
 		{
 			name: "正常系: 空配列でもエラーにならない",
-			a:    NewTexts([]string{}),
-			b:    NewText("no"),
+			a:    NewUserInputTexts([]string{}),
+			b:    NewUserInputText("no"),
 			want: false,
 		},
 	}

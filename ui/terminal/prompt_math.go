@@ -15,7 +15,7 @@ import (
 // promptWithMath は単純な算数入力を求めるプロンプトを表示する。
 func promptWithMath(path string) (bool, error) {
 	validate := func(input string) error {
-		_, err := model.NewNumberWithText(model.NewText(input))
+		_, err := model.NewNumberWithUserInputText(model.NewUserInputText(input))
 		if err != nil {
 			return err
 		}
@@ -36,7 +36,7 @@ func promptWithMath(path string) (bool, error) {
 		return false, err
 	}
 
-	resultNum, err := model.NewNumberWithText(model.NewText(result))
+	resultNum, err := model.NewNumberWithUserInputText(model.NewUserInputText(result))
 	if err != nil {
 		return false, err
 	}
@@ -122,15 +122,15 @@ func promptWithMath2(path string) (bool, error) {
 	}
 fin:
 
-	n1, err := model.NewNumberWithText(model.NewText(strings.Join(vals[2], "")))
+	n1, err := model.NewNumberWithUserInputText(model.NewUserInputText(strings.Join(vals[2], "")))
 	if err != nil {
 		return false, err
 	}
-	n2, err := model.NewNumberWithText(model.NewText(strings.Join(vals[3], "")))
+	n2, err := model.NewNumberWithUserInputText(model.NewUserInputText(strings.Join(vals[3], "")))
 	if err != nil {
 		return false, err
 	}
-	n3, err := model.NewNumberWithText(model.NewText(strings.Join(vals[4], "")))
+	n3, err := model.NewNumberWithUserInputText(model.NewUserInputText(strings.Join(vals[4], "")))
 	if err != nil {
 		return false, err
 	}

@@ -21,7 +21,7 @@ func (s YesNoService) JudgeYesNoJapanese(input string) bool {
 }
 
 func judge(input string, want string) bool {
-	i := model.NewText(input)
-	w := model.NewText(want).Prefixes()
+	i := model.NewUserInputText(input)
+	w := model.NewUserInputText(want).Prefixes()
 	return w.Contains(i)
 }

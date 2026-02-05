@@ -2,45 +2,45 @@ package model
 
 import "strings"
 
-type Text struct {
+type UserInputText struct {
 	value string
 }
 
-func NewText(s string) Text {
+func NewUserInputText(s string) UserInputText {
 	s = strings.TrimSpace(s)
-	return Text{
+	return UserInputText{
 		value: s,
 	}
 }
 
-func (t Text) Equal(t2 Text) bool {
+func (t UserInputText) Equal(t2 UserInputText) bool {
 	return t.value == t2.value
 }
 
 // prefixes は yes を y, ye, yes といった感じの配列にして返す。
-func (t Text) Prefixes() Texts {
+func (t UserInputText) Prefixes() UserInputTexts {
 	// マルチバイト文字を考慮するため rune に変換
 	runes := []rune(t.value)
 	result := make([]string, 0, len(runes))
 	for i := 1; i <= len(runes); i++ {
 		result = append(result, string(runes[:i]))
 	}
-	return NewTexts(result)
+	return NewUserInputTexts(result)
 }
 
-type Texts struct {
-	value []Text
+type UserInputTexts struct {
+	value []UserInputText
 }
 
-func NewTexts(s []string) Texts {
-	t := Texts{}
+func NewUserInputTexts(s []string) UserInputTexts {
+	t := UserInputTexts{}
 	for _, v := range s {
-		t.value = append(t.value, NewText(v))
+		t.value = append(t.value, NewUserInputText(v))
 	}
 	return t
 }
 
-func (t Texts) Contains(t2 Text) bool {
+func (t UserInputTexts) Contains(t2 UserInputText) bool {
 	for _, v := range t.value {
 		if v.Equal(t2) {
 			return true
