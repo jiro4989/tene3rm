@@ -21,35 +21,23 @@ func (t UserInputText) Equal(t2 UserInputText) bool {
 }
 
 // prefixes は yes を y, ye, yes といった感じの配列にして返す。
-func (t UserInputText) Prefixes() UserInputTexts {
+func (t UserInputText) Prefixes() []string {
 	// マルチバイト文字を考慮するため rune に変換
 	runes := []rune(t.value)
 	result := make([]string, 0, len(runes))
 	for i := 1; i <= len(runes); i++ {
 		result = append(result, string(runes[:i]))
 	}
-	return NewUserInputTexts(result)
+	return result
 }
 
 func (t UserInputText) ToInt() (int, error) {
 	return strconv.Atoi(t.value)
 }
 
-type UserInputTexts struct {
-	value []UserInputText
-}
-
-func NewUserInputTexts(s []string) UserInputTexts {
-	t := UserInputTexts{}
-	for _, v := range s {
-		t.value = append(t.value, NewUserInputText(v))
-	}
-	return t
-}
-
-func (t UserInputTexts) Contains(t2 UserInputText) bool {
-	for _, v := range t.value {
-		if v.Equal(t2) {
+func (t UserInputText) In(vals []string) bool {
+	for _, v := range vals {
+		if t.value == v {
 			return true
 		}
 	}
