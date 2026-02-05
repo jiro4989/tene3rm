@@ -11,25 +11,25 @@ const face = "(*'-')!"
 
 // promptWithYesNo はシンプルなYes/Noプロンプトを表示する。
 func promptWithYesNo(path string) (bool, error) {
-	svc := service.NewTextService()
+	svc := service.NewYesNoService()
 	return promptWithSimpleText(path, face+" < remove file '%s'? [y/n]", "", svc.JudgeYesNo)
 }
 
 // promptWithYesNoDenial はNoのときだけファイルを削除するプロンプトを表示する。
 func promptWithYesNoDenial(path string) (bool, error) {
-	svc := service.NewTextService()
+	svc := service.NewYesNoService()
 	return promptWithSimpleText(path, face+" < DON't remove file '%s'? [y/n]", "", svc.JudgeYesNoDenial)
 }
 
 // promptWithYesNoJapanese はシンプルなはい/いいえプロンプトを表示する。
 func promptWithYesNoJapanese(path string) (bool, error) {
-	svc := service.NewTextService()
+	svc := service.NewYesNoService()
 	return promptWithSimpleText(path, face+" < '%s' ファイルを削除しますか? [はい/いいえ]", "", svc.JudgeYesNoJapanese)
 }
 
 // promptWithYesNoJapanese3 は 3 回確認するプロンプトを表示する。
 func promptWithYesNoJapanese3(path string) (bool, error) {
-	svc := service.NewTextService()
+	svc := service.NewYesNoService()
 	ok, err := promptWithYesNoJapanese(path)
 	if err != nil {
 		return false, err

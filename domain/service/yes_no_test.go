@@ -6,40 +6,40 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestTextServiceJudgeYesNo(t *testing.T) {
+func TestYesNoServiceJudgeYesNo(t *testing.T) {
 	tests := []struct {
 		name  string
-		svc   TextService
+		svc   YesNoService
 		input string
 		want  bool
 	}{
 		{
 			name:  "正常系: yes のときは true",
-			svc:   NewTextService(),
+			svc:   NewYesNoService(),
 			input: "yes",
 			want:  true,
 		},
 		{
 			name:  "正常系: ye のときは true",
-			svc:   NewTextService(),
+			svc:   NewYesNoService(),
 			input: "ye",
 			want:  true,
 		},
 		{
 			name:  "正常系: y のときは true",
-			svc:   NewTextService(),
+			svc:   NewYesNoService(),
 			input: "y",
 			want:  true,
 		},
 		{
 			name:  "正常系: yes でないときは false",
-			svc:   NewTextService(),
+			svc:   NewYesNoService(),
 			input: "no",
 			want:  false,
 		},
 		{
 			name:  "正常系: 空文字列は false",
-			svc:   NewTextService(),
+			svc:   NewYesNoService(),
 			input: "",
 			want:  false,
 		},
@@ -54,34 +54,34 @@ func TestTextServiceJudgeYesNo(t *testing.T) {
 	}
 }
 
-func TestTextServiceJudgeYesNoDenial(t *testing.T) {
+func TestYesNoServiceJudgeYesNoDenial(t *testing.T) {
 	tests := []struct {
 		name  string
-		svc   TextService
+		svc   YesNoService
 		input string
 		want  bool
 	}{
 		{
 			name:  "正常系: no のときは true",
-			svc:   NewTextService(),
+			svc:   NewYesNoService(),
 			input: "no",
 			want:  true,
 		},
 		{
 			name:  "正常系: n のときは true",
-			svc:   NewTextService(),
+			svc:   NewYesNoService(),
 			input: "n",
 			want:  true,
 		},
 		{
 			name:  "正常系: no でないときは false",
-			svc:   NewTextService(),
+			svc:   NewYesNoService(),
 			input: "yes",
 			want:  false,
 		},
 		{
 			name:  "正常系: 空文字列は false",
-			svc:   NewTextService(),
+			svc:   NewYesNoService(),
 			input: "",
 			want:  false,
 		},
@@ -96,34 +96,34 @@ func TestTextServiceJudgeYesNoDenial(t *testing.T) {
 	}
 }
 
-func TestTextServiceJudgeYesNoJapanese(t *testing.T) {
+func TestYesNoServiceJudgeYesNoJapanese(t *testing.T) {
 	tests := []struct {
 		name  string
-		svc   TextService
+		svc   YesNoService
 		input string
 		want  bool
 	}{
 		{
 			name:  "正常系: はいのときは true",
-			svc:   NewTextService(),
+			svc:   NewYesNoService(),
 			input: "はい",
 			want:  true,
 		},
 		{
 			name:  "正常系: はのときは true",
-			svc:   NewTextService(),
+			svc:   NewYesNoService(),
 			input: "は",
 			want:  true,
 		},
 		{
 			name:  "正常系: はいでないときは false",
-			svc:   NewTextService(),
+			svc:   NewYesNoService(),
 			input: "いいえ",
 			want:  false,
 		},
 		{
 			name:  "正常系: 空文字列は false",
-			svc:   NewTextService(),
+			svc:   NewYesNoService(),
 			input: "",
 			want:  false,
 		},

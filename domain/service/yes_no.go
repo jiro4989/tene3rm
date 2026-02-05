@@ -2,21 +2,21 @@ package service
 
 import "github.com/jiro4989/tene3rm/domain/model"
 
-type TextService struct{}
+type YesNoService struct{}
 
-func NewTextService() TextService {
-	return TextService{}
+func NewYesNoService() YesNoService {
+	return YesNoService{}
 }
 
-func (s TextService) JudgeYesNo(input string) bool {
+func (s YesNoService) JudgeYesNo(input string) bool {
 	return judge(input, "yes")
 }
 
-func (s TextService) JudgeYesNoDenial(input string) bool {
+func (s YesNoService) JudgeYesNoDenial(input string) bool {
 	return judge(input, "no")
 }
 
-func (s TextService) JudgeYesNoJapanese(input string) bool {
+func (s YesNoService) JudgeYesNoJapanese(input string) bool {
 	return judge(input, "はい")
 }
 
