@@ -57,6 +57,11 @@ func promptWithMath2(path string) (bool, error) {
 	a := rand.Intn(90) + 10
 	b := rand.Intn(90) + 10
 
+	ca, err := model.NewTwoDigitMultiplyColumnAddition(a, b)
+	if err != nil {
+		return false, err
+	}
+
 	var (
 		a10 int = a / 10
 		a1  int = a % 10
@@ -135,11 +140,7 @@ fin:
 		return false, err
 	}
 
-	r1 := n1 == a*b1
-	r2 := n2 == a*b10
-	r3 := n3 == a*b
-
-	return r1 && r2 && r3, nil
+	return ca.Correct(n1, n2, n3), nil
 }
 
 func setNum(pos model.Position, s string) {
