@@ -44,8 +44,8 @@ func (c TwoDigitMultiplyColumnAddition) Multiply() int {
 	return c.a * c.b
 }
 
-// Correct は途中計算も含めて正しいか判定する。
-func (c TwoDigitMultiplyColumnAddition) Correct(n1, n2, n3 int) bool {
+// Equal は途中計算も含めて正しいか判定する。
+func (c TwoDigitMultiplyColumnAddition) Equal(n1, n2, n3 int) bool {
 	r1 := n1 == c.MultiplyOnesPlace()
 	r2 := n2 == c.MultiplyTensPlace()
 	r3 := n3 == c.Multiply()
