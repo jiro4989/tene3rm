@@ -129,15 +129,15 @@ func drawScreen(cag model.ColumnAdditionGame) {
 		drawLine(line, leftPad, y+topPad)
 		lastLineY = y
 	}
-	drawLine("h: move left, j: move down, k: move up, l: move right", leftPad, lastLineY+1)
-	drawLine("ENTER: confirm", leftPad, lastLineY+2)
+	drawLine("h: move left, j: move down, k: move up, l: move right", leftPad, lastLineY+3)
+	drawLine("ENTER: confirm", leftPad, lastLineY+4)
 
 	x, y := cag.PositionXY()
 	var y2 int
-	if 2 <= y && y < 4 {
-		y2 = y + 1 + topPad
+	if 0 <= y && y < 2 {
+		y2 = y + 3 + topPad
 	} else {
-		y2 = y + 2 + topPad
+		y2 = y + 4 + topPad
 	}
 	termbox.SetCell(x*2+leftPad, y2, cag.CurrentPositionCellValueRune(), termbox.ColorWhite, termbox.ColorBlack)
 	termbox.Flush()
