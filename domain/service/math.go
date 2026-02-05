@@ -1,6 +1,8 @@
 package service
 
 import (
+	"math"
+
 	"github.com/jiro4989/tene3rm/domain/model"
 	"github.com/jiro4989/tene3rm/infra"
 )
@@ -11,7 +13,7 @@ func NewMathService() MathService {
 	return MathService{}
 }
 
-func (s MathService) SimpleOperations(oprg, arg, brg infra.RandomGenerator) (model.Number, model.Number, model.Number, string) {
+func (s MathService) SimpleOperations(oprg, arg, brg infra.RandomGenerator) (int, int, int, string) {
 	ops := []model.Operator{
 		&model.PlusOperator{},
 		&model.MinusOperator{},
@@ -21,9 +23,8 @@ func (s MathService) SimpleOperations(oprg, arg, brg infra.RandomGenerator) (mod
 	op := ops[opi]
 
 	// 0にならないようにする
-	n1 := model.NewNumber(1)
-	a := model.NewNumber(arg.Intn(10)).Max(n1)
-	b := model.NewNumber(brg.Intn(10)).Max(n1)
+	a := int(math.Max(float64(arg.Intn(10)), 1))
+	b := int(math.Max(float64(brg.Intn(10)), 1))
 
 	return op.Do(a, b), a, b, op.Op()
 }

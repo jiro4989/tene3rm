@@ -28,7 +28,7 @@ func promptWithMath(path string) (bool, error) {
 	want, a, b, op := svc.SimpleOperations(r, r, r)
 
 	p := promptui.Prompt{
-		Label:    fmt.Sprintf("%s: remove file '%s'? (%d %s %d = ?)", appname, path, a.Value(), op, b.Value()),
+		Label:    fmt.Sprintf("%s: remove file '%s'? (%d %s %d = ?)", appname, path, a, op, b),
 		Validate: validate,
 	}
 	result, err := p.Run()
@@ -36,12 +36,12 @@ func promptWithMath(path string) (bool, error) {
 		return false, err
 	}
 
-	resultNum, err := model.NewNumberWithUserInputText(model.NewUserInputText(result))
+	resultNum, err := model.NewUserInputText(result).ToInt()
 	if err != nil {
 		return false, err
 	}
 
-	return want.Equal(resultNum), nil
+	return want == resultNum, nil
 }
 
 var vals = [5][]string{

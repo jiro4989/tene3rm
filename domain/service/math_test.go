@@ -3,7 +3,6 @@ package service
 import (
 	"testing"
 
-	"github.com/jiro4989/tene3rm/domain/model"
 	"github.com/jiro4989/tene3rm/infra"
 	"github.com/stretchr/testify/assert"
 )
@@ -21,9 +20,9 @@ func TestMathServiceSimpleOperation(t *testing.T) {
 		name    string
 		svc     MathService
 		o, a, b infra.RandomGenerator
-		want    model.Number
-		wantA   model.Number
-		wantB   model.Number
+		want    int
+		wantA   int
+		wantB   int
 		wantOp  string
 	}{
 		{
@@ -32,9 +31,9 @@ func TestMathServiceSimpleOperation(t *testing.T) {
 			o:      &oAdd,
 			a:      &n1,
 			b:      &n3,
-			want:   model.NewNumber(4),
-			wantA:  model.NewNumber(1),
-			wantB:  model.NewNumber(3),
+			want:   4,
+			wantA:  1,
+			wantB:  3,
 			wantOp: "+",
 		},
 		{
@@ -43,9 +42,9 @@ func TestMathServiceSimpleOperation(t *testing.T) {
 			o:      &oMinus,
 			a:      &n3,
 			b:      &n5,
-			want:   model.NewNumber(-2),
-			wantA:  model.NewNumber(3),
-			wantB:  model.NewNumber(5),
+			want:   -2,
+			wantA:  3,
+			wantB:  5,
 			wantOp: "-",
 		},
 		{
@@ -54,9 +53,9 @@ func TestMathServiceSimpleOperation(t *testing.T) {
 			o:      &oMulti,
 			a:      &n1,
 			b:      &n5,
-			want:   model.NewNumber(5),
-			wantA:  model.NewNumber(1),
-			wantB:  model.NewNumber(5),
+			want:   5,
+			wantA:  1,
+			wantB:  5,
 			wantOp: "*",
 		},
 		{
@@ -65,9 +64,9 @@ func TestMathServiceSimpleOperation(t *testing.T) {
 			o:      &oAdd,
 			a:      &n0,
 			b:      &n0,
-			want:   model.NewNumber(2),
-			wantA:  model.NewNumber(1),
-			wantB:  model.NewNumber(1),
+			want:   2,
+			wantA:  1,
+			wantB:  1,
 			wantOp: "+",
 		},
 	}

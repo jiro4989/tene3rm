@@ -1,6 +1,9 @@
 package model
 
-import "strings"
+import (
+	"strconv"
+	"strings"
+)
 
 type UserInputText struct {
 	value string
@@ -26,6 +29,10 @@ func (t UserInputText) Prefixes() UserInputTexts {
 		result = append(result, string(runes[:i]))
 	}
 	return NewUserInputTexts(result)
+}
+
+func (t UserInputText) ToInt() (int, error) {
+	return strconv.Atoi(t.value)
 }
 
 type UserInputTexts struct {
