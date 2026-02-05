@@ -43,14 +43,6 @@ func promptWithMath(path string) (bool, error) {
 	return want == resultNum, nil
 }
 
-var vals = [5][]string{
-	{" ", " ", " ", " "},
-	{" ", " ", " ", " "},
-	{" ", " ", " ", " "},
-	{" ", " ", " ", " "},
-	{" ", " ", " ", " "},
-}
-
 // promptWithMath2 は筆算での計算結果を求めるプロンプトを表示する。
 func promptWithMath2(path string) (bool, error) {
 	a := rand.Intn(90) + 10
@@ -113,10 +105,6 @@ func promptWithMath2(path string) (bool, error) {
 fin:
 
 	return cag.Evaluate()
-}
-
-func setNum(pos model.Position, s string) {
-	vals[pos.Y()][pos.X()] = s
 }
 
 func drawScreen(cag model.ColumnAdditionGame) {
