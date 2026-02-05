@@ -18,6 +18,7 @@ func Prompt(path string, seed int64) (bool, error) {
 		promptWithYesNoJapanese3,
 		promptWithYesNoDenial,
 		promptWithMath,
+		promptWithMath2,
 		promptWithTimer,
 	}
 
