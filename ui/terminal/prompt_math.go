@@ -15,7 +15,7 @@ import (
 // promptWithMath は単純な算数入力を求めるプロンプトを表示する。
 func promptWithMath(path string) (bool, error) {
 	validate := func(input string) error {
-		_, err := model.NewNumberWithUserInputText(model.NewUserInputText(input))
+		_, err := model.NewUserInputText(input).ToInt()
 		if err != nil {
 			return err
 		}
@@ -122,22 +122,22 @@ func promptWithMath2(path string) (bool, error) {
 	}
 fin:
 
-	n1, err := model.NewNumberWithUserInputText(model.NewUserInputText(strings.Join(vals[2], "")))
+	n1, err := model.NewUserInputText(strings.Join(vals[2], "")).ToInt()
 	if err != nil {
 		return false, err
 	}
-	n2, err := model.NewNumberWithUserInputText(model.NewUserInputText(strings.Join(vals[3], "")))
+	n2, err := model.NewUserInputText(strings.Join(vals[3], "")).ToInt()
 	if err != nil {
 		return false, err
 	}
-	n3, err := model.NewNumberWithUserInputText(model.NewUserInputText(strings.Join(vals[4], "")))
+	n3, err := model.NewUserInputText(strings.Join(vals[4], "")).ToInt()
 	if err != nil {
 		return false, err
 	}
 
-	r1 := n1.Equal(model.NewNumber(a * b1))
-	r2 := n2.Equal(model.NewNumber(a * b10))
-	r3 := n3.Equal(model.NewNumber(a * b))
+	r1 := n1 == a*b1
+	r2 := n2 == a*b10
+	r3 := n3 == a*b
 
 	return r1 && r2 && r3, nil
 }
