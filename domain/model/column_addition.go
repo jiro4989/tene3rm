@@ -2,7 +2,7 @@ package model
 
 import "fmt"
 
-// TwoDigitMultiplyColumnAddition は筆算を管理する。
+// TwoDigitMultiplyColumnAddition は2桁同士の乗算の筆算を管理する。
 type TwoDigitMultiplyColumnAddition struct {
 	a, b int
 	op   string
