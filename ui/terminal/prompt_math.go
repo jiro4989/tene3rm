@@ -114,7 +114,7 @@ func drawScreen(cag model.ColumnAdditionGame, path string) {
 	const topPad = 1
 
 	cursorLineY := topPad
-	drawLine(fmt.Sprintf("%s < remove file '%s'", face, path), leftPad, topPad)
+	drawLine(fmt.Sprintf("%s < remove file '%s'?", face, path), leftPad, topPad)
 	cursorLineY += 2
 
 	startLineY := cursorLineY
