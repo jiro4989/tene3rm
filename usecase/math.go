@@ -7,13 +7,13 @@ import (
 	"github.com/jiro4989/tene3rm/infra"
 )
 
-type MathService struct{}
+type SimpleOperationUsecase struct{}
 
-func NewMathService() MathService {
-	return MathService{}
+func NewSimpleOperationUsecase() SimpleOperationUsecase {
+	return SimpleOperationUsecase{}
 }
 
-func (s MathService) SimpleOperations(oprg, arg, brg infra.RandomGenerator) (int, int, int, string) {
+func (s SimpleOperationUsecase) SimpleOperations(oprg, arg, brg infra.RandomGenerator) (int, int, int, string) {
 	ops := []domain.Operator{
 		&domain.PlusOperator{},
 		&domain.MinusOperator{},

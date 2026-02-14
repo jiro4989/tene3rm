@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestMathServiceSimpleOperation(t *testing.T) {
+func TestSimpleOperationUsecaseSimpleOperation(t *testing.T) {
 	oAdd := infra.NewMockRandomGenerator(0)
 	oMinus := infra.NewMockRandomGenerator(1)
 	oMulti := infra.NewMockRandomGenerator(2)
@@ -18,7 +18,7 @@ func TestMathServiceSimpleOperation(t *testing.T) {
 
 	tests := []struct {
 		name    string
-		svc     MathService
+		svc     SimpleOperationUsecase
 		o, a, b infra.RandomGenerator
 		want    int
 		wantA   int
@@ -27,7 +27,7 @@ func TestMathServiceSimpleOperation(t *testing.T) {
 	}{
 		{
 			name:   "正常系: 1 + 3 = 4",
-			svc:    NewMathService(),
+			svc:    NewSimpleOperationUsecase(),
 			o:      &oAdd,
 			a:      &n1,
 			b:      &n3,
@@ -38,7 +38,7 @@ func TestMathServiceSimpleOperation(t *testing.T) {
 		},
 		{
 			name:   "正常系: 3 - 5 = -2",
-			svc:    NewMathService(),
+			svc:    NewSimpleOperationUsecase(),
 			o:      &oMinus,
 			a:      &n3,
 			b:      &n5,
@@ -49,7 +49,7 @@ func TestMathServiceSimpleOperation(t *testing.T) {
 		},
 		{
 			name:   "正常系: 1 * 5 = 5",
-			svc:    NewMathService(),
+			svc:    NewSimpleOperationUsecase(),
 			o:      &oMulti,
 			a:      &n1,
 			b:      &n5,
@@ -60,7 +60,7 @@ func TestMathServiceSimpleOperation(t *testing.T) {
 		},
 		{
 			name:   "正常系: 乱数は最低でも1になる",
-			svc:    NewMathService(),
+			svc:    NewSimpleOperationUsecase(),
 			o:      &oAdd,
 			a:      &n0,
 			b:      &n0,

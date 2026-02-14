@@ -22,7 +22,7 @@ func promptWithMath(path string) (bool, error) {
 		return nil
 	}
 
-	svc := usecase.NewMathService()
+	svc := usecase.NewSimpleOperationUsecase()
 	seed := time.Now().Unix()
 	r := rand.New(rand.NewSource(seed))
 	want, a, b, op := svc.SimpleOperations(r, r, r)
