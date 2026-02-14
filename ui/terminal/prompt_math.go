@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/jiro4989/tene3rm/domain/model"
-	"github.com/jiro4989/tene3rm/domain/service"
+	"github.com/jiro4989/tene3rm/usecase"
 	"github.com/manifoldco/promptui"
 	"github.com/nsf/termbox-go"
 )
@@ -21,7 +21,7 @@ func promptWithMath(path string) (bool, error) {
 		return nil
 	}
 
-	svc := service.NewMathService()
+	svc := usecase.NewMathService()
 	seed := time.Now().Unix()
 	r := rand.New(rand.NewSource(seed))
 	want, a, b, op := svc.SimpleOperations(r, r, r)

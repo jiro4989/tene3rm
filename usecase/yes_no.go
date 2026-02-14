@@ -1,4 +1,4 @@
-package service
+package usecase
 
 import "github.com/jiro4989/tene3rm/domain/model"
 
