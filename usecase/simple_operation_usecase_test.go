@@ -3,34 +3,44 @@ package usecase
 import (
 	"testing"
 
-	"github.com/jiro4989/tene3rm/infra"
 	"github.com/stretchr/testify/assert"
 )
 
-func TestSimpleOperationUsecaseSimpleOperation(t *testing.T) {
-	oAdd := infra.NewMockRandomGenerator(0)
-	oMinus := infra.NewMockRandomGenerator(1)
-	oMulti := infra.NewMockRandomGenerator(2)
-	n0 := infra.NewMockRandomGenerator(0)
-	n1 := infra.NewMockRandomGenerator(1)
-	n3 := infra.NewMockRandomGenerator(3)
-	n5 := infra.NewMockRandomGenerator(5)
+type MockRandomGenerator struct {
+	a, b, c int
+	counter int
+}
 
+func newMockRand(a, b, c int) *MockRandomGenerator {
+	return &MockRandomGenerator{
+		a: a,
+		b: b,
+		c: c,
+	}
+}
+
+func (m *MockRandomGenerator) Intn(n int) int {
+	m.counter++
+	if m.counter == 1 {
+		return m.a
+	} else if m.counter == 2 {
+		return m.b
+	}
+	return m.c
+}
+
+func TestSimpleOperationUsecaseSimpleOperation(t *testing.T) {
 	tests := []struct {
-		name    string
-		svc     SimpleOperationUsecase
-		o, a, b infra.RandomGenerator
-		want    int
-		wantA   int
-		wantB   int
-		wantOp  string
+		name   string
+		uc     SimpleOperationUsecase
+		want   int
+		wantA  int
+		wantB  int
+		wantOp string
 	}{
 		{
 			name:   "正常系: 1 + 3 = 4",
-			svc:    NewSimpleOperationUsecase(),
-			o:      &oAdd,
-			a:      &n1,
-			b:      &n3,
+			uc:     NewSimpleOperationUsecase(newMockRand(0, 1, 3)),
 			want:   4,
 			wantA:  1,
 			wantB:  3,
@@ -38,10 +48,7 @@ func TestSimpleOperationUsecaseSimpleOperation(t *testing.T) {
 		},
 		{
 			name:   "正常系: 3 - 5 = -2",
-			svc:    NewSimpleOperationUsecase(),
-			o:      &oMinus,
-			a:      &n3,
-			b:      &n5,
+			uc:     NewSimpleOperationUsecase(newMockRand(1, 3, 5)),
 			want:   -2,
 			wantA:  3,
 			wantB:  5,
@@ -49,10 +56,7 @@ func TestSimpleOperationUsecaseSimpleOperation(t *testing.T) {
 		},
 		{
 			name:   "正常系: 1 * 5 = 5",
-			svc:    NewSimpleOperationUsecase(),
-			o:      &oMulti,
-			a:      &n1,
-			b:      &n5,
+			uc:     NewSimpleOperationUsecase(newMockRand(2, 1, 5)),
 			want:   5,
 			wantA:  1,
 			wantB:  5,
@@ -60,10 +64,7 @@ func TestSimpleOperationUsecaseSimpleOperation(t *testing.T) {
 		},
 		{
 			name:   "正常系: 乱数は最低でも1になる",
-			svc:    NewSimpleOperationUsecase(),
-			o:      &oAdd,
-			a:      &n0,
-			b:      &n0,
+			uc:     NewSimpleOperationUsecase(newMockRand(0, 0, 0)),
 			want:   2,
 			wantA:  1,
 			wantB:  1,
@@ -74,7 +75,7 @@ func TestSimpleOperationUsecaseSimpleOperation(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			a := assert.New(t)
 
-			got, gotA, gotB, gotOp := tt.svc.Execute(tt.o, tt.a, tt.b)
+			got, gotA, gotB, gotOp := tt.uc.Execute()
 			a.Equal(tt.want, got)
 			a.Equal(tt.wantA, gotA)
 			a.Equal(tt.wantB, gotB)

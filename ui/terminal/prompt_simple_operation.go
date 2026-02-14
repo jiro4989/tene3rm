@@ -20,10 +20,10 @@ func promptWithSimpleOperation(path string) (bool, error) {
 		return nil
 	}
 
-	uc := usecase.NewSimpleOperationUsecase()
 	seed := time.Now().Unix()
 	r := rand.New(rand.NewSource(seed))
-	want, a, b, op := uc.Execute(r, r, r)
+	uc := usecase.NewSimpleOperationUsecase(r)
+	want, a, b, op := uc.Execute()
 
 	p := promptui.Prompt{
 		Label:    fmt.Sprintf("%s: remove file '%s'? (%d %s %d = ?)", appname, path, a, op, b),
