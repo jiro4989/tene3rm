@@ -17,8 +17,17 @@ rm: remove regular empty file '1.txt'? y
 
 In some environments, `rm` is aliased to rm `-i` by default to enforce this
 safety check.  However, this is easily bypassed. Users can simply pass the `-f`
-flag to ignore the prompt, or pipe the yes command into it to automate the
+flag to ignore the prompt, or pipe the `yes` command into it to automate the
 `"y"` response.
+
+```sh
+$ rm -i -f 1.txt
+
+$ yes | rm -i 2.txt
+rm: remove regular empty file '2.txt'?
+
+$
+```
 
 I wanted people to be more cautious with file deletion, but since some will
 always look for the easy way out, I created this command to force compliance.
