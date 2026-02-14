@@ -11,25 +11,25 @@ const face = "(*'-')!"
 
 // promptWithYesNo はシンプルなYes/Noプロンプトを表示する。
 func promptWithYesNo(path string) (bool, error) {
-	svc := usecase.NewYesNoUsecase()
-	return promptWithSimpleText(path, face+" < remove file '%s'? [y/n]", "", svc.JudgeYesNo)
+	uc := usecase.NewYesNoUsecase()
+	return promptWithSimpleText(path, face+" < remove file '%s'? [y/n]", "", uc.JudgeYesNo)
 }
 
 // promptWithYesNoDenial はNoのときだけファイルを削除するプロンプトを表示する。
 func promptWithYesNoDenial(path string) (bool, error) {
-	svc := usecase.NewYesNoUsecase()
-	return promptWithSimpleText(path, face+" < DON't remove file '%s'? [y/n]", "", svc.JudgeYesNoDenial)
+	uc := usecase.NewYesNoUsecase()
+	return promptWithSimpleText(path, face+" < DON't remove file '%s'? [y/n]", "", uc.JudgeYesNoDenial)
 }
 
 // promptWithYesNoJapanese はシンプルなはい/いいえプロンプトを表示する。
 func promptWithYesNoJapanese(path string) (bool, error) {
-	svc := usecase.NewYesNoUsecase()
-	return promptWithSimpleText(path, face+" < '%s' ファイルを削除しますか? [はい/いいえ]", "", svc.JudgeYesNoJapanese)
+	uc := usecase.NewYesNoUsecase()
+	return promptWithSimpleText(path, face+" < '%s' ファイルを削除しますか? [はい/いいえ]", "", uc.JudgeYesNoJapanese)
 }
 
 // promptWithYesNoJapanese3 は 3 回確認するプロンプトを表示する。
 func promptWithYesNoJapanese3(path string) (bool, error) {
-	svc := usecase.NewYesNoUsecase()
+	uc := usecase.NewYesNoUsecase()
 	ok, err := promptWithYesNoJapanese(path)
 	if err != nil {
 		return false, err
@@ -38,7 +38,7 @@ func promptWithYesNoJapanese3(path string) (bool, error) {
 		return false, nil
 	}
 
-	ok, err = promptWithSimpleText(path, "(*'o')? < '%s' 本当に? [はい/いいえ]", "", svc.JudgeYesNoJapanese)
+	ok, err = promptWithSimpleText(path, "(*'o')? < '%s' 本当に? [はい/いいえ]", "", uc.JudgeYesNoJapanese)
 	if err != nil {
 		return false, err
 	}
@@ -46,7 +46,7 @@ func promptWithYesNoJapanese3(path string) (bool, error) {
 		return false, nil
 	}
 
-	ok, err = promptWithSimpleText(path, "(*-o-)? < '%s' 削除すると復元できなくなるけれど大丈夫? [はい/いいえ]", "いいえ", svc.JudgeYesNoJapanese)
+	ok, err = promptWithSimpleText(path, "(*-o-)? < '%s' 削除すると復元できなくなるけれど大丈夫? [はい/いいえ]", "いいえ", uc.JudgeYesNoJapanese)
 	if err != nil {
 		return false, err
 	}
