@@ -6,40 +6,40 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestYesNoServiceJudgeYesNo(t *testing.T) {
+func TestYesNoUsecaseJudgeYesNo(t *testing.T) {
 	tests := []struct {
 		name  string
-		svc   YesNoService
+		svc   YesNoUsecase
 		input string
 		want  bool
 	}{
 		{
 			name:  "正常系: yes のときは true",
-			svc:   NewYesNoService(),
+			svc:   NewYesNoUsecase(),
 			input: "yes",
 			want:  true,
 		},
 		{
 			name:  "正常系: ye のときは true",
-			svc:   NewYesNoService(),
+			svc:   NewYesNoUsecase(),
 			input: "ye",
 			want:  true,
 		},
 		{
 			name:  "正常系: y のときは true",
-			svc:   NewYesNoService(),
+			svc:   NewYesNoUsecase(),
 			input: "y",
 			want:  true,
 		},
 		{
 			name:  "正常系: yes でないときは false",
-			svc:   NewYesNoService(),
+			svc:   NewYesNoUsecase(),
 			input: "no",
 			want:  false,
 		},
 		{
 			name:  "正常系: 空文字列は false",
-			svc:   NewYesNoService(),
+			svc:   NewYesNoUsecase(),
 			input: "",
 			want:  false,
 		},
@@ -54,34 +54,34 @@ func TestYesNoServiceJudgeYesNo(t *testing.T) {
 	}
 }
 
-func TestYesNoServiceJudgeYesNoDenial(t *testing.T) {
+func TestYesNoUsecaseJudgeYesNoDenial(t *testing.T) {
 	tests := []struct {
 		name  string
-		svc   YesNoService
+		svc   YesNoUsecase
 		input string
 		want  bool
 	}{
 		{
 			name:  "正常系: no のときは true",
-			svc:   NewYesNoService(),
+			svc:   NewYesNoUsecase(),
 			input: "no",
 			want:  true,
 		},
 		{
 			name:  "正常系: n のときは true",
-			svc:   NewYesNoService(),
+			svc:   NewYesNoUsecase(),
 			input: "n",
 			want:  true,
 		},
 		{
 			name:  "正常系: no でないときは false",
-			svc:   NewYesNoService(),
+			svc:   NewYesNoUsecase(),
 			input: "yes",
 			want:  false,
 		},
 		{
 			name:  "正常系: 空文字列は false",
-			svc:   NewYesNoService(),
+			svc:   NewYesNoUsecase(),
 			input: "",
 			want:  false,
 		},
@@ -96,34 +96,34 @@ func TestYesNoServiceJudgeYesNoDenial(t *testing.T) {
 	}
 }
 
-func TestYesNoServiceJudgeYesNoJapanese(t *testing.T) {
+func TestYesNoUsecaseJudgeYesNoJapanese(t *testing.T) {
 	tests := []struct {
 		name  string
-		svc   YesNoService
+		svc   YesNoUsecase
 		input string
 		want  bool
 	}{
 		{
 			name:  "正常系: はいのときは true",
-			svc:   NewYesNoService(),
+			svc:   NewYesNoUsecase(),
 			input: "はい",
 			want:  true,
 		},
 		{
 			name:  "正常系: はのときは true",
-			svc:   NewYesNoService(),
+			svc:   NewYesNoUsecase(),
 			input: "は",
 			want:  true,
 		},
 		{
 			name:  "正常系: はいでないときは false",
-			svc:   NewYesNoService(),
+			svc:   NewYesNoUsecase(),
 			input: "いいえ",
 			want:  false,
 		},
 		{
 			name:  "正常系: 空文字列は false",
-			svc:   NewYesNoService(),
+			svc:   NewYesNoUsecase(),
 			input: "",
 			want:  false,
 		},

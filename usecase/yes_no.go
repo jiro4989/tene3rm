@@ -2,21 +2,21 @@ package usecase
 
 import "github.com/jiro4989/tene3rm/domain"
 
-type YesNoService struct{}
+type YesNoUsecase struct{}
 
-func NewYesNoService() YesNoService {
-	return YesNoService{}
+func NewYesNoUsecase() YesNoUsecase {
+	return YesNoUsecase{}
 }
 
-func (s YesNoService) JudgeYesNo(input string) bool {
+func (s YesNoUsecase) JudgeYesNo(input string) bool {
 	return judge(input, "yes")
 }
 
-func (s YesNoService) JudgeYesNoDenial(input string) bool {
+func (s YesNoUsecase) JudgeYesNoDenial(input string) bool {
 	return judge(input, "no")
 }
 
-func (s YesNoService) JudgeYesNoJapanese(input string) bool {
+func (s YesNoUsecase) JudgeYesNoJapanese(input string) bool {
 	return judge(input, "はい")
 }
 
