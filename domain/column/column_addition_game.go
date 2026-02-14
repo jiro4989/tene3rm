@@ -1,4 +1,4 @@
-package domain
+package column
 
 import (
 	"fmt"

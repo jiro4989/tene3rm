@@ -1,4 +1,4 @@
-package domain
+package column
 
 type Position struct {
 	x, xMin, xMax int

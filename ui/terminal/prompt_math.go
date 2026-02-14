@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/jiro4989/tene3rm/domain"
+	"github.com/jiro4989/tene3rm/domain/column"
 	"github.com/jiro4989/tene3rm/usecase"
 	"github.com/manifoldco/promptui"
 	"github.com/nsf/termbox-go"
@@ -48,7 +49,7 @@ func promptWithMath2(path string) (bool, error) {
 	a := rand.Intn(90) + 10
 	b := rand.Intn(90) + 10
 
-	cag, err := domain.NewColumnAdditionGame(a, b)
+	cag, err := column.NewColumnAdditionGame(a, b)
 	if err != nil {
 		return false, err
 	}
@@ -107,7 +108,7 @@ fin:
 	return cag.Evaluate()
 }
 
-func drawScreen(cag domain.ColumnAdditionGame, path string) {
+func drawScreen(cag column.ColumnAdditionGame, path string) {
 	termbox.Clear(termbox.ColorDefault, termbox.ColorDefault)
 
 	const leftPad = 1
