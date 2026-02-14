@@ -98,3 +98,28 @@ func TestColumnAdditionGame_ResultStringLines(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, false, b)
 }
+
+func TestColumnAdditionGame_CurrentPositionCellIsEnterable(t *testing.T) {
+	g, err := NewColumnAdditionGame(12, 34)
+	require.NoError(t, err)
+
+	// 初期位置は入力可能
+	got := g.CurrentPositionCellIsEnterable()
+	assert.Equal(t, true, got)
+
+	g2 := g
+
+	// 1 行目左端は入力できない
+	g2 = g2.MoveLeft()
+	g2 = g2.MoveLeft()
+	g2 = g2.MoveLeft()
+	got = g2.CurrentPositionCellIsEnterable()
+	assert.Equal(t, false, got)
+
+	g2 = g
+
+	// 2 行目右端は入力できない
+	g2 = g2.MoveDown()
+	got = g2.CurrentPositionCellIsEnterable()
+	assert.Equal(t, false, got)
+}
