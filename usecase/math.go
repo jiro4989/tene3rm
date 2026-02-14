@@ -3,7 +3,7 @@ package usecase
 import (
 	"math"
 
-	"github.com/jiro4989/tene3rm/domain/model"
+	"github.com/jiro4989/tene3rm/domain"
 	"github.com/jiro4989/tene3rm/infra"
 )
 
@@ -14,10 +14,10 @@ func NewMathService() MathService {
 }
 
 func (s MathService) SimpleOperations(oprg, arg, brg infra.RandomGenerator) (int, int, int, string) {
-	ops := []model.Operator{
-		&model.PlusOperator{},
-		&model.MinusOperator{},
-		&model.MultiOperator{},
+	ops := []domain.Operator{
+		&domain.PlusOperator{},
+		&domain.MinusOperator{},
+		&domain.MultiOperator{},
 	}
 	opi := oprg.Intn(len(ops))
 	op := ops[opi]

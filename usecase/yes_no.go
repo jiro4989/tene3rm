@@ -1,6 +1,6 @@
 package usecase
 
-import "github.com/jiro4989/tene3rm/domain/model"
+import "github.com/jiro4989/tene3rm/domain"
 
 type YesNoService struct{}
 
@@ -21,7 +21,7 @@ func (s YesNoService) JudgeYesNoJapanese(input string) bool {
 }
 
 func judge(input string, want string) bool {
-	i := model.NewUserInputText(input)
-	w := model.NewUserInputText(want).Prefixes()
+	i := domain.NewUserInputText(input)
+	w := domain.NewUserInputText(want).Prefixes()
 	return i.In(w)
 }

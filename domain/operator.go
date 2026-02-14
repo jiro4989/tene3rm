@@ -1,4 +1,4 @@
-package model
+package domain
 
 type Operator interface {
 	Do(int, int) int

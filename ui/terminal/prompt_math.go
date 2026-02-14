@@ -5,7 +5,7 @@ import (
 	"math/rand"
 	"time"
 
-	"github.com/jiro4989/tene3rm/domain/model"
+	"github.com/jiro4989/tene3rm/domain"
 	"github.com/jiro4989/tene3rm/usecase"
 	"github.com/manifoldco/promptui"
 	"github.com/nsf/termbox-go"
@@ -14,7 +14,7 @@ import (
 // promptWithMath は単純な算数入力を求めるプロンプトを表示する。
 func promptWithMath(path string) (bool, error) {
 	validate := func(input string) error {
-		_, err := model.NewUserInputText(input).ToInt()
+		_, err := domain.NewUserInputText(input).ToInt()
 		if err != nil {
 			return err
 		}
@@ -35,7 +35,7 @@ func promptWithMath(path string) (bool, error) {
 		return false, err
 	}
 
-	resultNum, err := model.NewUserInputText(result).ToInt()
+	resultNum, err := domain.NewUserInputText(result).ToInt()
 	if err != nil {
 		return false, err
 	}
@@ -48,7 +48,7 @@ func promptWithMath2(path string) (bool, error) {
 	a := rand.Intn(90) + 10
 	b := rand.Intn(90) + 10
 
-	cag, err := model.NewColumnAdditionGame(a, b)
+	cag, err := domain.NewColumnAdditionGame(a, b)
 	if err != nil {
 		return false, err
 	}
@@ -107,7 +107,7 @@ fin:
 	return cag.Evaluate()
 }
 
-func drawScreen(cag model.ColumnAdditionGame, path string) {
+func drawScreen(cag domain.ColumnAdditionGame, path string) {
 	termbox.Clear(termbox.ColorDefault, termbox.ColorDefault)
 
 	const leftPad = 1
