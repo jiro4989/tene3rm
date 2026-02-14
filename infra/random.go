@@ -4,16 +4,16 @@ type RandomGenerator interface {
 	Intn(n int) int
 }
 
-type MockRandom struct {
+type MockRandomGenerator struct {
 	num int
 }
 
-func NewMockRandom(n int) MockRandom {
-	return MockRandom{
+func NewMockRandomGenerator(n int) MockRandomGenerator {
+	return MockRandomGenerator{
 		num: n,
 	}
 }
 
-func (m *MockRandom) Intn(n int) int {
+func (m *MockRandomGenerator) Intn(n int) int {
 	return m.num
 }

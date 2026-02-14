@@ -8,13 +8,13 @@ import (
 )
 
 func TestMathServiceSimpleOperation(t *testing.T) {
-	oAdd := infra.NewMockRandom(0)
-	oMinus := infra.NewMockRandom(1)
-	oMulti := infra.NewMockRandom(2)
-	n0 := infra.NewMockRandom(0)
-	n1 := infra.NewMockRandom(1)
-	n3 := infra.NewMockRandom(3)
-	n5 := infra.NewMockRandom(5)
+	oAdd := infra.NewMockRandomGenerator(0)
+	oMinus := infra.NewMockRandomGenerator(1)
+	oMulti := infra.NewMockRandomGenerator(2)
+	n0 := infra.NewMockRandomGenerator(0)
+	n1 := infra.NewMockRandomGenerator(1)
+	n3 := infra.NewMockRandomGenerator(3)
+	n5 := infra.NewMockRandomGenerator(5)
 
 	tests := []struct {
 		name    string
