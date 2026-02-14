@@ -43,15 +43,14 @@ _**JUST DO IT!!!**_
 
 ```sh
 tene3rm <files...>
+tene3rm -h
 ```
 
 ## Installation
 
-[source,bash]
-----
-
+```sh
 go install github.com/jiro4989/tene3rm@master
-----
+```
 
 ## LICENSE
 
