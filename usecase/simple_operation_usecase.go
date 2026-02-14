@@ -13,7 +13,7 @@ func NewSimpleOperationUsecase() SimpleOperationUsecase {
 	return SimpleOperationUsecase{}
 }
 
-func (s SimpleOperationUsecase) SimpleOperations(oprg, arg, brg infra.RandomGenerator) (int, int, int, string) {
+func (s SimpleOperationUsecase) Execute(oprg, arg, brg infra.RandomGenerator) (int, int, int, string) {
 	ops := []domain.Operator{
 		&domain.PlusOperator{},
 		&domain.MinusOperator{},

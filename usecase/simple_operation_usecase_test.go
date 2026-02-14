@@ -74,7 +74,7 @@ func TestSimpleOperationUsecaseSimpleOperation(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			a := assert.New(t)
 
-			got, gotA, gotB, gotOp := tt.svc.SimpleOperations(tt.o, tt.a, tt.b)
+			got, gotA, gotB, gotOp := tt.svc.Execute(tt.o, tt.a, tt.b)
 			a.Equal(tt.want, got)
 			a.Equal(tt.wantA, gotA)
 			a.Equal(tt.wantB, gotB)
