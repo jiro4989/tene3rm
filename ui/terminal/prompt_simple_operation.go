@@ -12,8 +12,8 @@ import (
 	"github.com/nsf/termbox-go"
 )
 
-// promptWithMath は単純な算数入力を求めるプロンプトを表示する。
-func promptWithMath(path string) (bool, error) {
+// promptWithSimpleOperation は単純な算数入力を求めるプロンプトを表示する。
+func promptWithSimpleOperation(path string) (bool, error) {
 	validate := func(input string) error {
 		_, err := domain.NewUserInputText(input).ToInt()
 		if err != nil {
