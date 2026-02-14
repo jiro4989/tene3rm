@@ -1,6 +1,7 @@
 package column
 
 import (
+	"fmt"
 	"strconv"
 	"strings"
 )
@@ -42,8 +43,25 @@ func (r Row) ResultStringLine() string {
 	return strings.Join(r.ToStrings(), " ")
 }
 
-func (r Row) ToInt() (int, error) {
-	// TODO: ここのバリデーションがあまい
+func (r Row) tail(index int) Cell {
+	return r.value[len(r.value)-index]
+}
+
+func (r Row) ToInt(rowIndex int) (int, error) {
+	if rowIndex == 0 {
+		if r.tail(1) == NewEmptyCell() || r.tail(2) == NewEmptyCell() || r.value[0] != NewEmptyCell() {
+			return 0, fmt.Errorf("row 1 is invalid")
+		}
+	} else if rowIndex == 1 {
+		if r.tail(2) == NewEmptyCell() || r.tail(3) == NewEmptyCell() || r.tail(1) != NewEmptyCell() {
+			return 0, fmt.Errorf("row 2 is invalid")
+		}
+	} else if rowIndex == 2 {
+		if r.tail(1) == NewEmptyCell() || r.tail(2) == NewEmptyCell() || r.tail(3) == NewEmptyCell() {
+			return 0, fmt.Errorf("row 3 is invalid")
+		}
+	}
+
 	s := strings.Join(r.ToStrings(), "")
 	s = strings.TrimSpace(s)
 	return strconv.Atoi(s)

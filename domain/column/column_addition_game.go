@@ -93,15 +93,15 @@ func divMod(n int) (int, int) {
 }
 
 func (c ColumnAdditionGame) Evaluate() (bool, error) {
-	n1, err := c.cells.value[0].ToInt()
+	n1, err := c.cells.value[0].ToInt(0)
 	if err != nil {
 		return false, err
 	}
-	n2, err := c.cells.value[1].ToInt()
+	n2, err := c.cells.value[1].ToInt(1)
 	if err != nil {
 		return false, err
 	}
-	n3, err := c.cells.value[2].ToInt()
+	n3, err := c.cells.value[2].ToInt(2)
 	if err != nil {
 		return false, err
 	}
