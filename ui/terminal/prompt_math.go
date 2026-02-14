@@ -61,6 +61,19 @@ func promptWithMath2(path string) (bool, error) {
 	termbox.SetInputMode(termbox.InputEsc)
 	termbox.Flush()
 
+	chMap := map[rune]string{
+		'0': "0",
+		'1': "1",
+		'2': "2",
+		'3': "3",
+		'4': "4",
+		'5': "5",
+		'6': "6",
+		'7': "7",
+		'8': "8",
+		'9': "9",
+	}
+
 	for {
 		drawScreen(cag, path)
 		time.Sleep(50 * time.Millisecond)
@@ -80,26 +93,13 @@ func promptWithMath2(path string) (bool, error) {
 				cag = cag.MoveUp()
 			case 'l':
 				cag = cag.MoveRight()
-			case '0':
-				cag = cag.SetString("0")
-			case '1':
-				cag = cag.SetString("1")
-			case '2':
-				cag = cag.SetString("2")
-			case '3':
-				cag = cag.SetString("3")
-			case '4':
-				cag = cag.SetString("4")
-			case '5':
-				cag = cag.SetString("5")
-			case '6':
-				cag = cag.SetString("6")
-			case '7':
-				cag = cag.SetString("7")
-			case '8':
-				cag = cag.SetString("8")
-			case '9':
-				cag = cag.SetString("9")
+			default:
+				v, ok := chMap[ev.Ch]
+				if ok {
+					if cag.CurrentPositionCellIsEnterable() {
+						cag = cag.SetString(v)
+					}
+				}
 			}
 		}
 	}

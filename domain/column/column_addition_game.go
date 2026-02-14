@@ -73,6 +73,16 @@ func (c ColumnAdditionGame) CurrentPositionCellValueRune() rune {
 	return []rune(c.CurrentPositionCellValue())[0]
 }
 
+func (c ColumnAdditionGame) CurrentPositionCellIsEnterable() bool {
+	x, y := c.PositionXY()
+	if y == 0 && x == 0 {
+		return false
+	} else if y == 1 && x == 3 {
+		return false
+	}
+	return true
+}
+
 func (c ColumnAdditionGame) ResultStringLines() []string {
 	result := make([]string, 0)
 	a10, a1 := divMod(c.ca.a)
