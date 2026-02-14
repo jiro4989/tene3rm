@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+
+	"github.com/jiro4989/tene3rm/domain"
 )
 
 type ColumnAdditionGame struct {
@@ -17,9 +19,20 @@ func NewColumnAdditionGame(a, b int) (ColumnAdditionGame, error) {
 	if err != nil {
 		return ColumnAdditionGame{}, err
 	}
+
+	x, err := domain.NewRangeInt(3, 0, 3)
+	if err != nil {
+		return ColumnAdditionGame{}, err
+	}
+
+	y, err := domain.NewRangeInt(0, 0, 2)
+	if err != nil {
+		return ColumnAdditionGame{}, err
+	}
+
 	return ColumnAdditionGame{
 		ca:    ca,
-		pos:   NewPosition(3, 0, 0, 0, 3, 2),
+		pos:   NewPosition(x, y),
 		cells: NewCells(),
 	}, nil
 }
@@ -46,16 +59,16 @@ func (c ColumnAdditionGame) MoveDown() ColumnAdditionGame {
 
 func (c ColumnAdditionGame) SetString(s string) ColumnAdditionGame {
 	cell := NewCell(s)
-	c.cells.value[c.pos.y].value[c.pos.x] = cell
+	c.cells.value[c.pos.Y()].value[c.pos.X()] = cell
 	return c
 }
 
 func (c ColumnAdditionGame) PositionXY() (int, int) {
-	return c.pos.x, c.pos.y
+	return c.pos.X(), c.pos.Y()
 }
 
 func (c ColumnAdditionGame) CurrentPositionCellValue() string {
-	return c.cells.value[c.pos.y].value[c.pos.x].value
+	return c.cells.value[c.pos.Y()].value[c.pos.X()].value
 }
 
 func (c ColumnAdditionGame) CurrentPositionCellValueRune() rune {
