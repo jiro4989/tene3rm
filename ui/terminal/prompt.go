@@ -20,6 +20,7 @@ func Prompt(path string, seed int64) (bool, error) {
 		promptWithSimpleOperation,
 		promptWithColumnAddition,
 		promptWithTimer,
+		promptWithCaptcha,
 	}
 
 	r := rand.New(rand.NewSource(seed))
