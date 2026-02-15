@@ -9,6 +9,7 @@ type Tetris struct {
 	board           Board
 	mino            Mino
 	score           Score
+	goalScore       Score
 	running         bool
 	forceGenNewMino bool
 	mu              sync.Mutex
@@ -16,10 +17,11 @@ type Tetris struct {
 
 func NewTetris() *Tetris {
 	return &Tetris{
-		board:   newDefaultBoard(),
-		mino:    newDefaultMino(),
-		score:   newDefaultScore(),
-		running: true,
+		board:     newDefaultBoard(),
+		mino:      newDefaultMino(),
+		score:     newDefaultScore(),
+		goalScore: newScore(300),
+		running:   true,
 	}
 }
 
@@ -115,6 +117,10 @@ func (t *Tetris) scorePlus() {
 
 func (t *Tetris) ScorePoint() int {
 	return t.score.value
+}
+
+func (t *Tetris) ArrivedGoalScore() bool {
+	return t.score.GreaterThan(t.goalScore)
 }
 
 func (t *Tetris) deleteRows() {

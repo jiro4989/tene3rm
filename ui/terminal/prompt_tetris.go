@@ -20,12 +20,9 @@ func promptWithTetris(_ string) (bool, error) {
 	t := tetris.NewTetris()
 
 	go startTetrisGameTimer(t)
-
 	waitTetrisKeyInput(t)
 
-	score := t.ScorePoint()
-
-	return 300 <= score, nil
+	return t.ArrivedGoalScore(), nil
 }
 
 func startTetrisGameTimer(t *tetris.Tetris) {
@@ -38,6 +35,7 @@ func startTetrisGameTimer(t *tetris.Tetris) {
 			drawTetrisScreen(t)
 			if t.MinoIsOverlap() {
 				t.StopGame()
+				break
 			}
 		}
 
