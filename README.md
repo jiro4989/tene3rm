@@ -103,7 +103,7 @@ tene3rm -h
 ## Installation
 
 ```sh
-go install github.com/jiro4989/tene3rm@master
+go install github.com/jiro4989/tene3rm@latest
 ```
 
 ## LICENSE
