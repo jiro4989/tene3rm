@@ -105,5 +105,3 @@ go install github.com/jiro4989/tene3rm@master
 ## LICENSE
 
 MIT
-
-MIT
