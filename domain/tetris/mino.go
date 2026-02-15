@@ -7,7 +7,7 @@ type Mino struct {
 
 func newDefaultMino() Mino {
 	return Mino{
-		value: cellMino,
+		value: CellMino,
 		x:     7,
 		y:     0,
 	}

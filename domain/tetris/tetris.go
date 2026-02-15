@@ -22,6 +22,20 @@ func NewTetris() *Tetris {
 	}
 }
 
+func (t *Tetris) PreviewCells() [][]Cell {
+	cells := [][]Cell{}
+	for _, row := range t.board.value {
+		dst := make([]Cell, len(row.value))
+		copy(dst, row.value)
+		cells = append(cells, dst)
+	}
+
+	// Mino の現在位置に Cell を反映した上で返却する
+	cells[t.mino.y][t.mino.x] = t.mino.value
+
+	return cells
+}
+
 func (t *Tetris) StopGame() {
 	t.mu.Lock()
 	t.running = false
@@ -33,9 +47,13 @@ func (t *Tetris) Running() bool {
 }
 
 func (t *Tetris) PutMino() {
+	t.mu.Lock()
+
 	t.board.value[t.mino.y].value[t.mino.x] = t.mino.value
 	t.deleteRows()
 	t.mino = newDefaultMino()
+
+	t.mu.Unlock()
 }
 
 func (t *Tetris) MinoMove(f func() Mino) {
@@ -75,19 +93,22 @@ func (t *Tetris) MinoIsOverlap() bool {
 	return !t.board.canMove(x, y)
 }
 
-func (t *Tetris) ScorePlus() {
+func (t *Tetris) scorePlus() {
 	t.mu.Lock()
 	t.score = t.score.Plus()
 	t.mu.Unlock()
+}
+
+func (t *Tetris) ScorePoint() int {
+	return t.score.value
 }
 
 func (t *Tetris) deleteRows() {
 	for i := 0; i < 25; i++ {
 		row := t.board.value[i]
 		if row.IsFulfilled() {
-			t.mu.Lock()
 			t.board.clearRow(i)
-			t.mu.Unlock()
+			t.scorePlus()
 		}
 	}
 }
@@ -95,7 +116,7 @@ func (t *Tetris) deleteRows() {
 type Cell int
 
 func (c Cell) IsNotEmpty() bool {
-	return c != cellEmpty
+	return c != CellEmpty
 }
 
 func (c Cell) IsEmpty() bool {
@@ -103,9 +124,9 @@ func (c Cell) IsEmpty() bool {
 }
 
 const (
-	cellEmpty Cell = 0
-	cellWall
-	cellMino
+	CellEmpty Cell = iota
+	CellWall
+	CellMino
 )
 
 type Row struct {
@@ -130,14 +151,14 @@ func (r *Row) IsFulfilled() bool {
 
 func newEmptyRow() Row {
 	value := []Cell{
-		cellWall, cellWall, cellWall, cellEmpty, cellEmpty, cellEmpty, cellEmpty, cellEmpty, cellEmpty, cellEmpty, cellEmpty, cellWall, cellWall, cellWall,
+		CellWall, CellWall, CellWall, CellEmpty, CellEmpty, CellEmpty, CellEmpty, CellEmpty, CellEmpty, CellEmpty, CellEmpty, CellWall, CellWall, CellWall,
 	}
 	return newRow(value)
 }
 
 func newBottomRow() Row {
 	value := []Cell{
-		cellWall, cellWall, cellWall, cellWall, cellWall, cellWall, cellWall, cellWall, cellWall, cellWall, cellWall, cellWall, cellWall, cellWall,
+		CellWall, CellWall, CellWall, CellWall, CellWall, CellWall, CellWall, CellWall, CellWall, CellWall, CellWall, CellWall, CellWall, CellWall,
 	}
 	return newRow(value)
 }
