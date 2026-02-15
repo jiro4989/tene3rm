@@ -118,12 +118,24 @@ func (t *Tetris) ScorePoint() int {
 }
 
 func (t *Tetris) deleteRows() {
+	deleted := false
+	deletedY := 0
 	for i := 0; i < 25; i++ {
 		row := t.board.value[i]
 		if row.IsFulfilled() {
 			t.board.clearRow(i)
 			t.scorePlus()
+			deleted = true
+			deletedY = i
 		}
+	}
+
+	// 行の削除が成功したら、上のミノをすべて１つ下に落とす
+	if deleted {
+		for i := deletedY; 0 < i; i-- {
+			t.board.value[i] = t.board.value[i-1]
+		}
+		t.board.value[0] = newEmptyRow()
 	}
 }
 
