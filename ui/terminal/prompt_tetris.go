@@ -23,7 +23,9 @@ func promptWithTetris(_ string) (bool, error) {
 
 	waitTetrisKeyInput(t)
 
-	return false, nil
+	score := t.ScorePoint()
+
+	return 300 <= score, nil
 }
 
 func startTetrisGameTimer(t *tetris.Tetris) {
@@ -96,7 +98,12 @@ func drawTetrisScreen(t *tetris.Tetris) {
 	for y, cell := range cells {
 		drawTetrisBoardRow(cell, leftPad, y+topPad)
 	}
-	drawLine(fmt.Sprintf("SCORE %d", t.ScorePoint()), 30, 3)
+	drawLine(fmt.Sprintf("SCORE      %d", t.ScorePoint()), 34, 3)
+	drawLine("GOLE SCORE 300", 34, 4)
+
+	drawLine("h: move left, j: move down, l: move right", leftPad, 30)
+	drawLine("space: move bottom", leftPad, 31)
+	drawLine("esc: stop game", leftPad, 32)
 
 	termbox.Flush()
 }
