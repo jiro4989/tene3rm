@@ -28,18 +28,26 @@ func promptWithTetris(_ string) (bool, error) {
 
 func startTetrisGameTimer(t *tetris.Tetris) {
 	for t.Running() {
-		drawTetrisScreen(t)
-
 		if t.MinoCanMoveDown() {
 			t.MinoMoveDown()
+			drawTetrisScreen(t)
 		} else {
 			t.PutMino()
+			drawTetrisScreen(t)
 			if t.MinoIsOverlap() {
 				t.StopGame()
 			}
 		}
 
-		time.Sleep(1 * time.Second)
+		// 合計１秒のスリープとするが、割り込みで
+		// 次の Mino 生成を可能にするために分割してスリープする
+		for i := 0; i < 20; i++ {
+			time.Sleep(50 * time.Millisecond)
+			if t.ForceGenNewMino() {
+				t.ResetForceGenNewMino()
+				break
+			}
+		}
 	}
 }
 

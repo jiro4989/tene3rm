@@ -6,11 +6,12 @@ import "sync"
 // ポインターレシーバーにして構造体の複製が発生しないようにする。
 
 type Tetris struct {
-	board   Board
-	mino    Mino
-	score   Score
-	running bool
-	mu      sync.Mutex
+	board           Board
+	mino            Mino
+	score           Score
+	running         bool
+	forceGenNewMino bool
+	mu              sync.Mutex
 }
 
 func NewTetris() *Tetris {
@@ -79,8 +80,9 @@ func (t *Tetris) MinoMoveDown() {
 
 func (t *Tetris) MinoMoveBottom() {
 	for i := 0; i < 25; i++ {
-		t.MinoMove(t.mino.MoveDown)
+		t.MinoMoveDown()
 	}
+	t.setForceGenNewMino(true)
 }
 
 func (t *Tetris) MinoCanMoveDown() bool {
@@ -93,10 +95,22 @@ func (t *Tetris) MinoIsOverlap() bool {
 	return !t.board.canMove(x, y)
 }
 
-func (t *Tetris) scorePlus() {
+func (t *Tetris) ResetForceGenNewMino() {
+	t.setForceGenNewMino(false)
+}
+
+func (t *Tetris) ForceGenNewMino() bool {
+	return t.forceGenNewMino
+}
+
+func (t *Tetris) setForceGenNewMino(b bool) {
 	t.mu.Lock()
-	t.score = t.score.Plus()
+	t.forceGenNewMino = b
 	t.mu.Unlock()
+}
+
+func (t *Tetris) scorePlus() {
+	t.score = t.score.Plus()
 }
 
 func (t *Tetris) ScorePoint() int {
