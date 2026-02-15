@@ -11,7 +11,7 @@ import (
 // promptWithTimer は一定時間経過後に入力を促すプロンプトを表示する。
 func promptWithTimer(_ string) (bool, error) {
 	i := rand.Intn(4) + 4
-	msg := fmt.Sprintf("%s < stop in %d seconds [enter]", face, i)
+	msg := fmt.Sprintf("%s: stop in %d seconds [enter]", appname, i)
 	fmt.Println(msg)
 
 	now := time.Now()

@@ -7,24 +7,22 @@ import (
 	"github.com/manifoldco/promptui"
 )
 
-const face = "(*'-')!"
-
 // promptWithYesNo はシンプルなYes/Noプロンプトを表示する。
 func promptWithYesNo(path string) (bool, error) {
 	uc := usecase.NewYesNoUsecase()
-	return promptWithSimpleText(path, face+" < remove file '%s'? [y/n]", "", uc.JudgeYesNo)
+	return promptWithSimpleText(path, appname+": remove file '%s'? [y/n]", "", uc.JudgeYesNo)
 }
 
 // promptWithYesNoDenial はNoのときだけファイルを削除するプロンプトを表示する。
 func promptWithYesNoDenial(path string) (bool, error) {
 	uc := usecase.NewYesNoUsecase()
-	return promptWithSimpleText(path, face+" < DON't remove file '%s'? [y/n]", "", uc.JudgeYesNoDenial)
+	return promptWithSimpleText(path, appname+": DON't remove file '%s'? [y/n]", "", uc.JudgeYesNoDenial)
 }
 
 // promptWithYesNoJapanese はシンプルなはい/いいえプロンプトを表示する。
 func promptWithYesNoJapanese(path string) (bool, error) {
 	uc := usecase.NewYesNoUsecase()
-	return promptWithSimpleText(path, face+" < '%s' ファイルを削除しますか? [はい/いいえ]", "", uc.JudgeYesNoJapanese)
+	return promptWithSimpleText(path, appname+": '%s' ファイルを削除しますか? [はい/いいえ]", "", uc.JudgeYesNoJapanese)
 }
 
 // promptWithYesNoJapanese3 は 3 回確認するプロンプトを表示する。
@@ -38,7 +36,7 @@ func promptWithYesNoJapanese3(path string) (bool, error) {
 		return false, nil
 	}
 
-	ok, err = promptWithSimpleText(path, "(*'o')? < '%s' 本当に? [はい/いいえ]", "", uc.JudgeYesNoJapanese)
+	ok, err = promptWithSimpleText(path, appname+": '%s' 本当に? [はい/いいえ]", "", uc.JudgeYesNoJapanese)
 	if err != nil {
 		return false, err
 	}
@@ -46,7 +44,7 @@ func promptWithYesNoJapanese3(path string) (bool, error) {
 		return false, nil
 	}
 
-	ok, err = promptWithSimpleText(path, "(*-o-)? < '%s' 削除すると復元できなくなるけれど大丈夫? [はい/いいえ]", "いいえ", uc.JudgeYesNoJapanese)
+	ok, err = promptWithSimpleText(path, appname+": '%s' 削除すると復元できなくなるけれど大丈夫? [はい/いいえ]", "いいえ", uc.JudgeYesNoJapanese)
 	if err != nil {
 		return false, err
 	}
