@@ -21,6 +21,7 @@ func Prompt(path string, seed int64) (bool, error) {
 		promptWithColumnAddition,
 		promptWithTimer,
 		promptWithCaptcha,
+		promptWithTetris,
 	}
 
 	r := rand.New(rand.NewSource(seed))

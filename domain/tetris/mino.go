@@ -1,8 +1,16 @@
 package tetris
 
 type Mino struct {
-	value int
+	value Cell
 	x, y  int
+}
+
+func newDefaultMino() Mino {
+	return Mino{
+		value: cellMino,
+		x:     7,
+		y:     0,
+	}
 }
 
 func (m Mino) MoveLeft() Mino {

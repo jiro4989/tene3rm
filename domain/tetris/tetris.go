@@ -1,24 +1,49 @@
 package tetris
 
+import "sync"
+
 // 配列のコピーコストが高くなると嫌なので、
 // ポインターレシーバーにして構造体の複製が発生しないようにする。
 
 type Tetris struct {
-	board Board
-	mino  Mino
-	score Score
+	board   Board
+	mino    Mino
+	score   Score
+	running bool
+	mu      sync.Mutex
 }
 
-func NewTetris() Tetris {
-	return Tetris{
-		board: newBoard(),
+func NewTetris() *Tetris {
+	return &Tetris{
+		board:   newDefaultBoard(),
+		mino:    newDefaultMino(),
+		score:   newDefaultScore(),
+		running: true,
 	}
+}
+
+func (t *Tetris) StopGame() {
+	t.mu.Lock()
+	t.running = false
+	t.mu.Unlock()
+}
+
+func (t *Tetris) Running() bool {
+	return t.running
+}
+
+func (t *Tetris) PutMino() {
+	t.board.value[t.mino.y].value[t.mino.x] = t.mino.value
+	t.deleteRows()
+	t.mino = newDefaultMino()
 }
 
 func (t *Tetris) MinoMove(f func() Mino) {
 	mino := f()
 	if t.board.canMove(mino.x, mino.y) {
+		t.mu.Lock()
 		t.mino = mino
+		t.mu.Unlock()
 	}
 }
 
@@ -34,20 +59,35 @@ func (t *Tetris) MinoMoveDown() {
 	t.MinoMove(t.mino.MoveDown)
 }
 
+func (t *Tetris) MinoMoveBottom() {
+	for i := 0; i < 25; i++ {
+		t.MinoMove(t.mino.MoveDown)
+	}
+}
+
 func (t *Tetris) MinoCanMoveDown() bool {
 	x, y := t.mino.x, t.mino.y
 	return t.board.canMove(x, y+1)
 }
 
-func (t *Tetris) ScorePlus() {
-	t.score = t.score.Plus()
+func (t *Tetris) MinoIsOverlap() bool {
+	x, y := t.mino.x, t.mino.y
+	return !t.board.canMove(x, y)
 }
 
-func (t *Tetris) DeleteRows() {
+func (t *Tetris) ScorePlus() {
+	t.mu.Lock()
+	t.score = t.score.Plus()
+	t.mu.Unlock()
+}
+
+func (t *Tetris) deleteRows() {
 	for i := 0; i < 25; i++ {
 		row := t.board.value[i]
 		if row.IsFulfilled() {
+			t.mu.Lock()
 			t.board.clearRow(i)
+			t.mu.Unlock()
 		}
 	}
 }
@@ -56,6 +96,10 @@ type Cell int
 
 func (c Cell) IsNotEmpty() bool {
 	return c != cellEmpty
+}
+
+func (c Cell) IsEmpty() bool {
+	return !c.IsNotEmpty()
 }
 
 const (
@@ -74,7 +118,7 @@ func newRow(value []Cell) Row {
 	}
 }
 
-func (r Row) IsFulfilled() bool {
+func (r *Row) IsFulfilled() bool {
 	for _, cell := range r.value {
 		if cell.IsNotEmpty() {
 			continue
@@ -102,7 +146,7 @@ type Board struct {
 	value []Row
 }
 
-func newBoard() Board {
+func newDefaultBoard() Board {
 	value := []Row{}
 	for i := 0; i < 25; i++ {
 		value = append(value, newEmptyRow())
@@ -120,7 +164,7 @@ func (b *Board) cell(x, y int) Cell {
 }
 
 func (b *Board) canMove(x, y int) bool {
-	return b.cell(x, y).IsNotEmpty()
+	return b.cell(x, y).IsEmpty()
 }
 
 func (b *Board) clearRow(y int) {
