@@ -19,8 +19,8 @@ func promptWithTetris(_ string) (bool, error) {
 
 	t := tetris.NewTetris()
 
-	go startTetrisGameTimer(t)
-	waitTetrisKeyInput(t)
+	go waitTetrisKeyInput(t)
+	startTetrisGameTimer(t)
 
 	return t.ArrivedGoalScore(), nil
 }
