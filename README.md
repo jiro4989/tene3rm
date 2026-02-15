@@ -89,6 +89,10 @@ tene3rm: what was written in the '/tmp/tmp.png' file?:
 
 ![captcha](./img/captcha.png)
 
+### Tetris (Easy)
+
+![tetris](./img/tetris.png)
+
 ## Usage
 
 ```sh
