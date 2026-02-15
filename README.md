@@ -39,6 +39,56 @@ Now, users have no choice but to handle deletions manually and intentionally.
 
 _**JUST DO IT!!!**_
 
+## Prompt examples
+
+### Yes / No
+
+```sh
+$ ./tene3rm LICENSE
+tene3rm: remove file 'LICENSE'? [y/n]: y
+```
+
+### Math
+
+```sh
+$ ./tene3rm LICENSE
+tene3rm: remove file 'LICENSE'? (5 + 2 = ?): 7
+```
+
+### Math (TUI)
+
+```sh
+ tene3rm: remove file 'LICENSE'?
+
+     8 5
+   x 5 4
+ -------
+
+
+ -------
+
+
+ h: move left, j: move down, k: move up, l: move right
+ ENTER: confirm
+```
+
+### Timer
+
+```sh
+$ ./tene3rm LICENSE
+tene3rm: stop in 4 seconds [enter]
+4.78 seconds
+```
+
+### Captcha
+
+```sh
+$ ./tene3rm LICENSE
+tene3rm: what was written in the '/tmp/tmp.png' file?:
+```
+
+![captcha](./img/captcha.png)
+
 ## Usage
 
 ```sh
@@ -53,5 +103,7 @@ go install github.com/jiro4989/tene3rm@master
 ```
 
 ## LICENSE
+
+MIT
 
 MIT
