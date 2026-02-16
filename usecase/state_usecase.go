@@ -30,6 +30,11 @@ func (s StateUsecase) LoadState(filename string) (infra.StateDTO, error) {
 // IsActionLocked は失敗回数が3回以上の場合はロック状態と判定する。
 // なんらかのエラーが発生した場合はロック中とする。
 func (s StateUsecase) IsActionLocked(filename string, data infra.StateDTO) (bool, error) {
+	// 一度も失敗していない場合は Created が nil になるので早期リターン
+	if data.Created == nil {
+		return false, nil
+	}
+
 	// 現在時刻が、記録された時刻の1時間後を超えていた場合は失敗回数をリセットする
 	if data.Created.Add(1 * time.Hour).Before(s.timeGen.Now()) {
 		_, err := s.ResetFailCount(filename, data)
