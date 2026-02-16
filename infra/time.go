@@ -15,3 +15,17 @@ func NewTimeGeneratorImpl() TimeGeneratorImpl {
 func (t TimeGeneratorImpl) Now() time.Time {
 	return time.Now()
 }
+
+type MockTimeGenerator struct {
+	t time.Time
+}
+
+func NewMockTimeGenerator(t time.Time) MockTimeGenerator {
+	return MockTimeGenerator{
+		t: t,
+	}
+}
+
+func (t MockTimeGenerator) Now() time.Time {
+	return t.t
+}
