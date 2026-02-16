@@ -21,7 +21,7 @@ func NewStateUsecase(datastoreRepo repo.DataStoreRepo, timeGen infra.TimeGenerat
 
 func (s StateUsecase) LoadState(filename string) (infra.StateDTO, error) {
 	var data infra.StateDTO
-	if err := s.datastoreRepo.LoadJSON(filename, data); err != nil {
+	if err := s.datastoreRepo.LoadJSON(filename, &data); err != nil {
 		return infra.StateDTO{}, err
 	}
 	return data, nil

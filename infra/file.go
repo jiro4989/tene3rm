@@ -75,7 +75,7 @@ func (f FileRepo) LoadJSON(filename string, data any) error {
 		if err != nil {
 			return err
 		}
-		if err := json.Unmarshal(b, &data); err != nil {
+		if err := json.Unmarshal(b, data); err != nil {
 			return err
 		}
 	}
