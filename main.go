@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"os"
+	"os/signal"
+	"syscall"
 	"time"
 
 	"github.com/jiro4989/tene3rm/ui/terminal"
@@ -25,6 +27,9 @@ func main() {
 		fmt.Fprintln(os.Stderr, msg)
 		os.Exit(int(exitcodeErrorParseArgs))
 	}
+
+	// シグナルで作業を中断出来なくする
+	signal.Ignore(syscall.SIGTERM, syscall.SIGINT)
 
 	seed := time.Now().Unix()
 	os.Exit(int(Main(args, seed)))
