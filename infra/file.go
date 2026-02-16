@@ -2,6 +2,7 @@ package infra
 
 import (
 	"encoding/json"
+	"errors"
 	"os"
 	"path/filepath"
 )
@@ -18,12 +19,13 @@ func NewFileRepo(dir string) FileRepo {
 
 func (f FileRepo) Exists(filename string) (bool, error) {
 	_, err := os.Stat(f.FullPath(filename))
-	if os.IsExist(err) {
+	if err == nil {
 		return true, nil
-	} else if err != nil {
-		return false, err
 	}
-	return false, nil
+	if errors.Is(err, os.ErrNotExist) {
+		return false, nil
+	}
+	return false, err
 }
 
 func (f FileRepo) createFile(filename string) (*os.File, error) {
