@@ -8,20 +8,20 @@ import (
 )
 
 type GenerateStringUsecase struct {
-	randGen    infra.RandomGenerator
-	stringRepo repo.StringRepo
+	randGen       infra.RandomGenerator
+	datastoreRepo repo.DataStoreRepo
 }
 
-func NewGenerateStringUsecase(rg infra.RandomGenerator, sr repo.StringRepo) GenerateStringUsecase {
+func NewGenerateStringUsecase(rg infra.RandomGenerator, sr repo.DataStoreRepo) GenerateStringUsecase {
 	return GenerateStringUsecase{
-		randGen:    rg,
-		stringRepo: sr,
+		randGen:       rg,
+		datastoreRepo: sr,
 	}
 }
 
 func (g *GenerateStringUsecase) Execute(length int, filename string) (string, error) {
 	s := g.randomString(length)
-	return s, g.stringRepo.Save(filename, s)
+	return s, g.datastoreRepo.Save(filename, s)
 }
 
 func (g *GenerateStringUsecase) randomString(length int) string {
