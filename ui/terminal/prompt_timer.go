@@ -9,7 +9,9 @@ import (
 )
 
 // promptWithTimer は一定時間経過後に入力を促すプロンプトを表示する。
-func promptWithTimer(_ string) (bool, error) {
+func promptWithTimer(path string) (bool, error) {
+	fmt.Println(fmt.Sprintf("%s: remove file '%s'.", appname, path))
+
 	i := rand.Intn(4) + 4
 	msg := fmt.Sprintf("%s: stop in %d seconds [enter]", appname, i)
 	fmt.Println(msg)
