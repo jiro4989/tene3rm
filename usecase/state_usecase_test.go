@@ -69,7 +69,18 @@ func TestStateUsecase_LoadState(t *testing.T) {
 			}
 
 			a.NoError(err)
-			a.Equal(tt.want, got)
+			a.Equal(tt.want.FailCount, got.FailCount)
+			if tt.want.Created != nil {
+				// Location がローカルと CI で異なることでテストがコケることがあ
+				// るので、Location 以外をチェック
+				a.Equal(tt.want.Created.Year(), got.Created.Year())
+				a.Equal(tt.want.Created.Month(), got.Created.Month())
+				a.Equal(tt.want.Created.Day(), got.Created.Day())
+				a.Equal(tt.want.Created.Hour(), got.Created.Hour())
+				a.Equal(tt.want.Created.Minute(), got.Created.Minute())
+				a.Equal(tt.want.Created.Second(), got.Created.Second())
+				a.Equal(tt.want.Created.Nanosecond(), got.Created.Nanosecond())
+			}
 		})
 	}
 }
