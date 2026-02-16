@@ -9,7 +9,7 @@ import (
 )
 
 // promptWithTetris はEasyModeのテトリスを表示する。
-func promptWithTetris(_ string) (bool, error) {
+func promptWithTetris(path string) (bool, error) {
 	if err := termbox.Init(); err != nil {
 		return false, err
 	}
@@ -19,20 +19,20 @@ func promptWithTetris(_ string) (bool, error) {
 
 	t := tetris.NewTetris()
 
-	go waitTetrisKeyInput(t)
-	startTetrisGameTimer(t)
+	go waitTetrisKeyInput(t, path)
+	startTetrisGameTimer(t, path)
 
 	return t.ArrivedGoalScore(), nil
 }
 
-func startTetrisGameTimer(t *tetris.Tetris) {
+func startTetrisGameTimer(t *tetris.Tetris, path string) {
 	for t.Running() {
 		if t.MinoCanMoveDown() {
 			t.MinoMoveDown()
-			drawTetrisScreen(t)
+			drawTetrisScreen(t, path)
 		} else {
 			t.PutMino()
-			drawTetrisScreen(t)
+			drawTetrisScreen(t, path)
 			if t.MinoIsOverlap() {
 				t.StopGame()
 				break
@@ -51,7 +51,7 @@ func startTetrisGameTimer(t *tetris.Tetris) {
 	}
 }
 
-func waitTetrisKeyInput(t *tetris.Tetris) {
+func waitTetrisKeyInput(t *tetris.Tetris, path string) {
 	for t.Running() {
 		minoIsMoved := false
 
@@ -79,29 +79,33 @@ func waitTetrisKeyInput(t *tetris.Tetris) {
 		}
 
 		if minoIsMoved {
-			drawTetrisScreen(t)
+			drawTetrisScreen(t, path)
 		}
 
 		time.Sleep(50 * time.Millisecond)
 	}
 }
 
-func drawTetrisScreen(t *tetris.Tetris) {
+func drawTetrisScreen(t *tetris.Tetris, path string) {
 	termbox.Clear(termbox.ColorDefault, termbox.ColorDefault)
 
 	const leftPad = 1
-	const topPad = 1
+	topPad := 1
+
+	drawLine(fmt.Sprintf("%s: remove file '%s'?", appname, path), leftPad, topPad)
+
+	topPad += 2
 
 	cells := t.PreviewCells()
 	for y, cell := range cells {
 		drawTetrisBoardRow(cell, leftPad, y+topPad)
 	}
-	drawLine(fmt.Sprintf("SCORE      %d", t.ScorePoint()), 34, 3)
-	drawLine("GOLE SCORE 300", 34, 4)
+	drawLine(fmt.Sprintf("SCORE      %d", t.ScorePoint()), 34, 5)
+	drawLine("GOLE SCORE 300", 34, 6)
 
-	drawLine("h: move left, j: move down, l: move right", leftPad, 30)
-	drawLine("space: move bottom", leftPad, 31)
-	drawLine("esc: stop game", leftPad, 32)
+	drawLine("h: move left, j: move down, l: move right", leftPad, 32)
+	drawLine("space: move bottom", leftPad, 33)
+	drawLine("esc: stop game", leftPad, 34)
 
 	termbox.Flush()
 }
