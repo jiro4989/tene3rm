@@ -57,28 +57,11 @@ tene3rm: remove file 'LICENSE'? (5 + 2 = ?): 7
 
 ### Math (TUI)
 
-```sh
- tene3rm: remove file 'LICENSE'?
-
-     8 5
-   x 5 4
- -------
-
-
- -------
-
-
- h: move left, j: move down, k: move up, l: move right
- ENTER: confirm
-```
+![hissan](./img/hissan.gif)
 
 ### Timer
 
-```sh
-$ ./tene3rm LICENSE
-tene3rm: stop in 4 seconds [enter]
-4.78 seconds
-```
+![timer](./img/timer.gif)
 
 ### Captcha
 
@@ -91,7 +74,7 @@ tene3rm: what was written in the '/tmp/tmp.png' file?:
 
 ### Tetris (Easy)
 
-![tetris](./img/tetris.png)
+![tetris](./img/tetris.gif)
 
 ## Usage
 
