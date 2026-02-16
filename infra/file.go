@@ -16,8 +16,22 @@ func NewFileRepo(dir string) FileRepo {
 	}
 }
 
+func (f FileRepo) Exists(filename string) (bool, error) {
+	_, err := os.Stat(f.FullPath(filename))
+	if os.IsExist(err) {
+		return true, nil
+	} else if err != nil {
+		return false, err
+	}
+	return false, nil
+}
+
+func (f FileRepo) createFile(filename string) (*os.File, error) {
+	return os.Create(f.FullPath(filename))
+}
+
 func (f FileRepo) Save(filename string, data string) error {
-	fp, err := os.Create(f.FullPath(filename))
+	fp, err := f.createFile(filename)
 	if err != nil {
 		return err
 	}
@@ -32,7 +46,7 @@ func (f FileRepo) Save(filename string, data string) error {
 }
 
 func (f FileRepo) SaveJSON(filename string, data any) error {
-	fp, err := os.Create(f.FullPath(filename))
+	fp, err := f.createFile(filename)
 	if err != nil {
 		return err
 	}
@@ -48,6 +62,21 @@ func (f FileRepo) SaveJSON(filename string, data any) error {
 		return err
 	}
 
+	return nil
+}
+
+func (f FileRepo) LoadJSON(filename string, data any) error {
+	if ok, err := f.Exists(filename); err != nil {
+		return err
+	} else if ok {
+		b, err := os.ReadFile(f.FullPath(filename))
+		if err != nil {
+			return err
+		}
+		if err := json.Unmarshal(b, &data); err != nil {
+			return err
+		}
+	}
 	return nil
 }
 
