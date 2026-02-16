@@ -1,11 +1,9 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"os"
 	"os/signal"
-	"path/filepath"
 	"syscall"
 	"time"
 
@@ -97,87 +95,4 @@ func Main(args *CmdArgs, seed int64) exitcode {
 	}
 
 	return exitcodeOK
-}
-
-// incrementFailCount はファイルの失敗回数を加算する。
-func incrementFailCount() error {
-	tmp := os.TempDir()
-	basename := fmt.Sprintf(".%s.json", Appname)
-	file := filepath.Join(tmp, basename)
-
-	var data infra.StateDTO
-	_, err := os.Stat(file)
-	if os.IsExist(err) {
-		// すでにファイルが存在する場合は読み取る
-		b, err := os.ReadFile(file)
-		if err != nil {
-			return err
-		}
-		if err := json.Unmarshal(b, &data); err != nil {
-			return err
-		}
-		data.FailCount++
-	}
-
-	b, err := json.Marshal(&data)
-	if err != nil {
-		return err
-	}
-	if err := os.WriteFile(file, b, os.ModePerm); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-// resetFailCount はファイルの失敗回数を0にする。
-func resetFailCount() error {
-	tmp := os.TempDir()
-	basename := fmt.Sprintf(".%s.json", Appname)
-	file := filepath.Join(tmp, basename)
-
-	var data infra.StateDTO
-	_, err := os.Stat(file)
-	if os.IsExist(err) {
-		// すでにファイルが存在する場合は読み取る
-		b, err := os.ReadFile(file)
-		if err != nil {
-			return err
-		}
-		if err := json.Unmarshal(b, &data); err != nil {
-			return err
-		}
-	}
-	data.FailCount = 0
-
-	b, err := json.Marshal(&data)
-	if err != nil {
-		return err
-	}
-	if err := os.WriteFile(file, b, os.ModePerm); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func readData() (infra.StateDTO, error) {
-	tmp := os.TempDir()
-	basename := fmt.Sprintf(".%s.json", Appname)
-	file := filepath.Join(tmp, basename)
-
-	var data infra.StateDTO
-	_, err := os.Stat(file)
-	if os.IsExist(err) {
-		// すでにファイルが存在する場合は読み取る
-		b, err := os.ReadFile(file)
-		if err != nil {
-			return infra.StateDTO{}, err
-		}
-		if err := json.Unmarshal(b, &data); err != nil {
-			return infra.StateDTO{}, err
-		}
-	}
-
-	return data, nil
 }
