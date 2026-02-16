@@ -79,12 +79,14 @@ func Main(args *CmdArgs, seed int64) exitcode {
 		if !ok {
 			state, err = uc.IncrementFailCount(stateFile, state)
 			if err != nil {
+				// ステートの更新が失敗しても中断はしない
 				l.Error("failed to increment fail count", "err", err)
 			}
 			continue
 		}
 
 		if state, err = uc.ResetFailCount(stateFile, state); err != nil {
+			// ステートの更新が失敗しても中断はしない
 			l.Error("failed to reset fail count", "err", err)
 		}
 
