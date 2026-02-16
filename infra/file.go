@@ -5,7 +5,11 @@ import (
 	"errors"
 	"os"
 	"path/filepath"
+
+	"github.com/jiro4989/tene3rm/repo"
 )
+
+var _ repo.DataStoreRepo = FileRepo{}
 
 type FileRepo struct {
 	dir string
