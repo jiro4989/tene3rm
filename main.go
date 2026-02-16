@@ -59,7 +59,7 @@ func Main(args *CmdArgs, seed int64) exitcode {
 		logger.Error("failed to check state", "err", err)
 		return exitcodeErrorFailedToCheckState
 	} else if ok {
-		logger.Warn("action locked. please try again in one hour")
+		fmt.Println(fmt.Sprintf("%s: action locked. please try again in one hour", Appname))
 		return exitcodeErrorActionLocked
 	}
 
