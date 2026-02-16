@@ -1,5 +1,5 @@
 package repo
 
-type StringRepo interface {
+type DataStoreRepo interface {
 	Save(filename string, body string) error
 }
